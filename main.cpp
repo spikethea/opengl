@@ -4,6 +4,8 @@ using namespace std;
 #include <glad/glad.h> 
 #include <GLFW/glfw3.h>
 
+#include "Lsystem.h";
+
 
 /*resize the viewport to the window when the user resizes*/
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -22,6 +24,9 @@ int main(void)
 {
     std::cout << "Hello World" << std::endl;
     GLFWwindow* window;
+
+    //LindenMayer System
+    Lsystem();
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
