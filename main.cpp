@@ -76,6 +76,8 @@ int main(void)
 //        -0.5f,  0.5f, 0.0f   // top left
 //    };
 
+ // SCENE
+
    // Created vertex for element buffer object
    float firstSquare[] = {
     0.1f,  0.1f, 0.0f,  // top right
@@ -99,10 +101,22 @@ int main(void)
        1, 2, 3    // second triangle
    }; 
 
-   unsigned int VBOs[2], VAOs[2], EBOs[2];
-   glGenVertexArrays(2, VAOs); 
-   glGenBuffers(2, VBOs);
-   glGenBuffers(2, EBOs);
+   float lines[] =
+   {
+        0.5f, 0.8f, 0.0f,
+        0.5f, -0.8f, 0.0f
+   };
+
+   unsigned int linesIndices[] =
+   {
+        0, 1
+   };
+
+   // VAO, VBOs and EBOs Array for the number of objects in the scene.
+   unsigned int VBOs[3], VAOs[3], EBOs[3];
+   glGenVertexArrays(3, VAOs); 
+   glGenBuffers(3, VBOs);
+   glGenBuffers(3, EBOs);
    
 // First Square
 
@@ -138,7 +152,23 @@ int main(void)
    glEnableVertexAttribArray(0);  
    glBindVertexArray(0);
 
-    
+// Line Drawing
+   //Bind Vertex array object
+   glBindVertexArray(VAOs[2]);
+   // 0. copy our vertices array in a buffer for OpenGL to use
+   glBindBuffer(GL_ARRAY_BUFFER, VBOs[2]);
+   // Linking Vertex Attributes location = 0, vec3
+   glBufferData(GL_ARRAY_BUFFER, sizeof(lines), lines, GL_STATIC_DRAW);
+
+   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBOs[2]);
+   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(linesIndices), linesIndices, GL_STATIC_DRAW);
+
+   // 1. then set the vertex attributes pointers
+   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+   glEnableVertexAttribArray(0);
+   glBindVertexArray(0);
+
+   
 
 
        // SHADERS
@@ -189,7 +219,7 @@ int main(void)
        unsigned int shaderProgramYellow = glCreateProgram();
        
        // attach shader program to fragment shader & vertex shader
-        glShaderSource(fragmentShaderOrange, 1, &fragmentShader1Source, NULL);
+       glShaderSource(fragmentShaderOrange, 1, &fragmentShader1Source, NULL);
        glCompileShader(fragmentShaderOrange);
        glAttachShader(shaderProgramOrange, vertexShader);
        glAttachShader(shaderProgramOrange, fragmentShaderOrange);
@@ -249,12 +279,24 @@ int main(void)
            glClearColor(0.2f, 0.3f, 0.3f, 1.0f); // background color
            glClear(GL_COLOR_BUFFER_BIT);
 
-           
+           // This works
+           // glBegin(GL_POLYGON);
+           // glVertex2f(-0.5f, -0.5f);
+           // glVertex2f(0.5f, -0.5f);
+           // glVertex2f(0.5f, 0.5f);
+           // glVertex2f(-0.5f, 0.5f);
+           // glEnd();
+
+            // Classic OpenGL Line
+           //glBegin(GL_LINES);
+           //glVertex3f(0.5f, 0.5f, 0.0f);
+           //glVertex3f(0.5f, -0.5f, 0.0f);
+           //glEnd();
 
            /*Code To print First Square*/
            // 2. use our shader program when we want to render an object
            glUseProgram(shaderProgramOrange);
-           // 3. now draw the object
+           //// 3. now draw the object
            glBindVertexArray(VAOs[0]); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 
            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -267,13 +309,13 @@ int main(void)
 
            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-        // This works
-           // glBegin(GL_POLYGON);
-           // glVertex2f(-0.5f, -0.5f);
-           // glVertex2f(0.5f, -0.5f);
-           // glVertex2f(0.5f, 0.5f);
-           // glVertex2f(-0.5f, 0.5f);
-           // glEnd();
+           /*Code To print Lines*/
+           // 2. use our shader program when we want to render an object
+           glUseProgram(shaderProgramOrange);
+           // 3. now draw the object
+           glBindVertexArray(VAOs[2]); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+
+           glDrawArrays(GL_LINES, 0, 2);
 
            /* Poll for and process events */
            glfwPollEvents();
@@ -287,7 +329,7 @@ int main(void)
    glDeleteVertexArrays(2, VAOs);
    glDeleteBuffers(2, VBOs);
    glDeleteBuffers(2, EBOs);
-   //glDeleteProgram(shaderProgramOrange);
+   glDeleteProgram(shaderProgramOrange);
    glDeleteProgram(shaderProgramYellow);
 
 
