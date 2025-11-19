@@ -1,4 +1,0 @@
-﻿  main.cpp
-C:\Users\spike\Documents\OpenGL\Projects\Tutorial\main.cpp(7,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\spike\Documents\OpenGL\Projects\Tutorial\main.cpp(239,13): warning C4101: 'fragementSuccess': unreferenced local variable
-  OpenGLTutorial.vcxproj -> C:\Users\spike\Documents\OpenGL\Projects\x64\Debug\OpenGLTutorial.exe
