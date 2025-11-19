@@ -4,6 +4,7 @@ using namespace std;
 #include <glad/glad.h> 
 #include <GLFW/glfw3.h>
 
+<<<<<<< HEAD
 #include "Lsystem.h";
 #include "TurtleGraphics.h";
 
@@ -19,6 +20,154 @@ void processInput(GLFWwindow *window)
 {
    if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
        glfwSetWindowShouldClose(window, true);
+}
+
+void ConvertVec3(float Geometry[], Vec3 Vector, int startPoint) {
+    int vectorIndex = startPoint * 3;
+    Geometry[vectorIndex+0] = Vector.x;
+    Geometry[vectorIndex+1] = Vector.y;
+    Geometry[vectorIndex+2] = Vector.z;
+}
+
+void PlotLsystem() {
+	// Define Geometry for line drawing
+
+    //float Geometry[] =
+    //{
+    //     0.0f, 0.f, 0.0f,
+    //};
+
+    vector<vector<unsigned int>> lineIndicesArray;
+
+
+    //  This vector stores all the vertices generated from the L-system
+    vector<Vec3> vertices;
+	// This vector stores all the indices for the current line being drawn
+    vector<unsigned int> currentIndices;
+    
+
+
+    unsigned int GeometryIndices[] =
+    {
+         0,
+    };
+
+	Vec4 startPoint = { 0.0f, 0.0f, 0.0f, 0.0f };
+    vertices.push_back(Vec3({ 0.0f, 0.0f, 0.0f }));
+
+    
+    // Lindenmayer System
+
+    // Step 1 Defining Axiom
+    string axiom = "F";
+
+    // Step 2 define production rules e.g. A --> AAB
+    unordered_map<char, string> rules;
+
+    /*rules['A'] = "AB";
+    rules['B'] = "A";*/
+
+    rules['F'] = "F[+F]F[-F]F";
+
+    string currentLSystem = Lsystem(axiom, rules);
+
+	// Get the History of All Push and Pop Operations
+    stack<Vec4> VectorHistory;
+    VectorHistory.push({startPoint});
+
+    // Get the History of All Push and Pop points and where they are in the index
+    stack<int> IndexHistory;
+    IndexHistory.push({ 0 });
+
+
+
+    Vec3 currentPosition = vertices[0];
+    float currentOrientation = 0.0f; // in radians
+	int currentIndex = 0;
+
+    cout << currentLSystem << endl;
+    for (int i = 0; i < currentLSystem.length(); ++i) {
+        char command = currentLSystem[i];
+
+        switch (command) {
+        case 'F':
+            // draw forward
+            cout << "Draw Forward" << endl;
+			// code to draw a line forward
+
+			//VERTEX POSITION
+            currentPosition.x += 0.1f*sin(currentOrientation); // move the start point up by 0.1 units
+            currentPosition.y += 0.1f*cos(currentOrientation);
+            vertices.push_back(currentPosition);
+
+            // INDEX POS
+            currentIndex++;
+            currentIndices.push_back(currentIndex);
+            break;
+        case '+':
+            // turn right
+            cout << "Turn Right" << endl;
+            currentOrientation -= 26;
+            break;
+        case '-':
+            // turn left
+            cout << "Turn Left" << endl;
+            currentOrientation += 26;
+            break;
+        case '[':
+            {
+            // push position and angle to stack
+            cout << "Push to Stack" << endl;
+            // VERTEX POSITION
+            Vec4 pushVector4 = {
+                currentPosition.x,
+                currentPosition.y,
+                currentPosition.z,
+                currentOrientation
+                };
+            VectorHistory.push({ pushVector4 });
+
+            // INDEX
+			IndexHistory.push(currentIndex);
+            break;
+            }
+        case ']':
+            // pop position and angle from stack
+            cout << "Pop from Stack" << endl;
+
+			// VERTEX POSITION
+            Vec4 LastPosition = VectorHistory.top();
+			// reset current position to the last pushed position
+            currentPosition.x = LastPosition.x;
+            currentPosition.y = LastPosition.y;
+            currentPosition.z = LastPosition.z;
+			currentOrientation = LastPosition.radians; // reset orientation
+            VectorHistory.pop();
+
+            // INDEX
+            currentIndices.push_back(IndexHistory.top());
+            IndexHistory.pop();
+
+            lineIndicesArray.push_back(currentIndices);
+            break;
+        default:
+            // ignore unrecognized characters
+            break;
+	    }
+
+    }
+    cout << lineIndicesArray.size() << endl;
+    for (int i = 0; i < lineIndicesArray.size(); ++i) {
+        for (int j = 0; j < lineIndicesArray[i].size(); ++j) {
+            cout << lineIndicesArray[i][j] << ", ";
+        }
+        cout << endl;
+	}
+	
+
+
+
+	return;
 }
 
 int main(void)

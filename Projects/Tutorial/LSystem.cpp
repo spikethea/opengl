@@ -32,14 +32,18 @@ void Lsystem() {
 	rules['B'] = "A";
 
 	// Step 3 How many iterations are we going to do?
-	int interactions = 6;
-
+	int interactions = 1;
 	// Step 4 Apply rules in number of interations
 	string current = axiom;
 	for (int i = 0; i < interactions; ++i) {
 		current = applyRules(current, rules);
+<<<<<<< HEAD
 		cout << "Iteration " << i + 1 << ": " << current << "\n";
+=======
+		//cout << "Iteration " << i + 1 << ": " << current << "\n";
+>>>>>>> 5f5a8ce24e46dd3a502b78bfe3607ed33eff6118
 	}
 
-	return;
+	return current;
 }
+
