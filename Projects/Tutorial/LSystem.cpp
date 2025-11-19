@@ -1,9 +1,11 @@
 #include <iostream>
 #include <string>
 #include <unordered_map>
+
+#include "Lsystem.h"
 using namespace std;
 
-#include "Lsystem.h";
+
 
 string applyRules(const string& current, const unordered_map<char, string>& rules) {
 	string next;
@@ -20,16 +22,7 @@ string applyRules(const string& current, const unordered_map<char, string>& rule
 	return next;
 }
 
-void Lsystem() {
-	// Lindenmayer System
-	
-	// Step 1 Defining Axiom
-	string axiom = "A";
-
-	// Step 2 define production rules e.g. A --> AAB
-	unordered_map<char, string> rules;
-	rules['A'] = "AB";
-	rules['B'] = "A";
+string Lsystem(string axiom, unordered_map<char, string> rules) {
 
 	// Step 3 How many iterations are we going to do?
 	int interactions = 1;

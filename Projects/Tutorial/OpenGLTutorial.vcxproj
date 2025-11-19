@@ -144,7 +144,11 @@
     <ClInclude Include="dependencies\include\gl\glxew.h" />
     <ClInclude Include="dependencies\include\gl\wglew.h" />
     <ClInclude Include="header\shaderClass.h" />
+<<<<<<< HEAD
     <ClInclude Include="TurtleGraphics.h" />
+=======
+    <ClInclude Include="main.h" />
+>>>>>>> 5f5a8ce24e46dd3a502b78bfe3607ed33eff6118
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

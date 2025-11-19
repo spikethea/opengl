@@ -7,6 +7,10 @@ using namespace std;
 <<<<<<< HEAD
 #include "Lsystem.h";
 #include "TurtleGraphics.h";
+=======
+#include "main.h";
+#include <stack>;
+>>>>>>> 5f5a8ce24e46dd3a502b78bfe3607ed33eff6118
 
 
 /*resize the viewport to the window when the user resizes*/
@@ -175,9 +179,6 @@ int main(void)
     std::cout << "Hello World" << std::endl;
     GLFWwindow* window;
 
-    //LindenMayer System
-    Lsystem();
-
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -259,7 +260,7 @@ int main(void)
 
    unsigned int linesIndices[] =
    {
-        0, 1
+        0, 1, 0, 1
    };
 
    // VAO, VBOs and EBOs Array for the number of objects in the scene.
@@ -386,11 +387,11 @@ int main(void)
 
        // COMPILE LOG CHECKS FOR SHADER TEST WORKING
        // check vertex compilation was successful
-       int  fragementSuccess;
+       int  fragmentSuccess;
        char fragmentInfoLog[512];
-       glGetShaderiv(fragmentShaderYellow, GL_COMPILE_STATUS, &success);
+       glGetShaderiv(fragmentShaderYellow, GL_COMPILE_STATUS, &fragmentSuccess);
 
-       if(!success)
+       if(!fragmentSuccess)
        {
            glGetShaderInfoLog(vertexShader, 512, NULL, fragmentInfoLog);
            std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << fragmentInfoLog << std::endl;
@@ -418,7 +419,7 @@ int main(void)
        glDeleteShader(fragmentShaderYellow);
 
 // RENDER LOOP
-
+       PlotLsystem();
        /* Loop until the user closes the window */
        while (!glfwWindowShouldClose(window))
        {
@@ -465,7 +466,9 @@ int main(void)
            // 3. now draw the object
            glBindVertexArray(VAOs[2]); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 
-           glDrawArrays(GL_LINES, 0, 2);
+           int vertexCount = sizeof(lines) / 12;
+           //std:cout << "Vertex Count: " << vertexCount << endl;
+           glDrawArrays(GL_LINES, 0, vertexCount);
 
            /* Poll for and process events */
            glfwPollEvents();
