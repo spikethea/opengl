@@ -30,7 +30,11 @@ string Lsystem(string axiom, unordered_map<char, string> rules, int iterations) 
 	string current = axiom;
 	for (int i = 0; i < interactions; ++i) {
 		current = applyRules(current, rules);
+<<<<<<< HEAD
+		cout << "Iteration " << i + 1 << ": " << current << "\n";
+=======
 		//cout << "Iteration " << i + 1 << ": " << current << "\n";
+>>>>>>> 5f5a8ce24e46dd3a502b78bfe3607ed33eff6118
 	}
 
 	return current;

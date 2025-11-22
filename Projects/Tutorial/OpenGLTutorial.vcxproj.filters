@@ -27,6 +27,9 @@
     <ClCompile Include="LSystem.h">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="TurtleGraphics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dependencies\include\gl\eglew.h">
@@ -50,7 +53,11 @@
     <ClInclude Include="header\shaderClass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="TurtleGraphics.h">
+=======
     <ClInclude Include="main.h">
+>>>>>>> 5f5a8ce24e46dd3a502b78bfe3607ed33eff6118
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
