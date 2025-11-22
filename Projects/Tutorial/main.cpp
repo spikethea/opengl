@@ -1,12 +1,15 @@
 #include <iostream>
-using namespace std;
+
 //#include <GL/glew.h>
 #include <glad/glad.h> 
 #include <GLFW/glfw3.h>
-
+#define _USE_MATH_DEFINES
+#include <cmath>
 #include "main.h";
 #include <stack>;
+#include <corecrt_math_defines.h>
 
+using namespace std;
 
 /*resize the viewport to the window when the user resizes*/
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -21,153 +24,202 @@ void processInput(GLFWwindow *window)
        glfwSetWindowShouldClose(window, true);
 }
 
-void ConvertVec3(float Geometry[], Vec3 Vector, int startPoint) {
-    int vectorIndex = startPoint * 3;
-    Geometry[vectorIndex+0] = Vector.x;
-    Geometry[vectorIndex+1] = Vector.y;
-    Geometry[vectorIndex+2] = Vector.z;
-}
-
-void PlotLsystem() {
-	// Define Geometry for line drawing
-
-    //float Geometry[] =
-    //{
-    //     0.0f, 0.f, 0.0f,
-    //};
-
-    vector<vector<unsigned int>> lineIndicesArray;
 
 
-    //  This vector stores all the vertices generated from the L-system
-    vector<Vec3> vertices;
-	// This vector stores all the indices for the current line being drawn
-    vector<unsigned int> currentIndices;
-    
-
-
-    unsigned int GeometryIndices[] =
-    {
-         0,
-    };
-
-	Vec4 startPoint = { 0.0f, 0.0f, 0.0f, 0.0f };
-    vertices.push_back(Vec3({ 0.0f, 0.0f, 0.0f }));
 
     
-    // Lindenmayer System
+    void TurtleGraphics::ConvertVec3List() {
 
-    // Step 1 Defining Axiom
-    string axiom = "F";
-
-    // Step 2 define production rules e.g. A --> AAB
-    unordered_map<char, string> rules;
-
-    /*rules['A'] = "AB";
-    rules['B'] = "A";*/
-
-    rules['F'] = "F[+F]F[-F]F";
-
-    string currentLSystem = Lsystem(axiom, rules);
-
-	// Get the History of All Push and Pop Operations
-    stack<Vec4> VectorHistory;
-    VectorHistory.push({startPoint});
-
-    // Get the History of All Push and Pop points and where they are in the index
-    stack<int> IndexHistory;
-    IndexHistory.push({ 0 });
-
-
-
-    Vec3 currentPosition = vertices[0];
-    float currentOrientation = 0.0f; // in radians
-	int currentIndex = 0;
-
-    cout << currentLSystem << endl;
-    for (int i = 0; i < currentLSystem.length(); ++i) {
-        char command = currentLSystem[i];
-
-        switch (command) {
-        case 'F':
-            // draw forward
-            cout << "Draw Forward" << endl;
-			// code to draw a line forward
-
-			//VERTEX POSITION
-            currentPosition.x += 0.1f*sin(currentOrientation); // move the start point up by 0.1 units
-            currentPosition.y += 0.1f*cos(currentOrientation);
-            vertices.push_back(currentPosition);
-
-            // INDEX POS
-            currentIndex++;
-            currentIndices.push_back(currentIndex);
-            break;
-        case '+':
-            // turn right
-            cout << "Turn Right" << endl;
-            currentOrientation -= 26;
-            break;
-        case '-':
-            // turn left
-            cout << "Turn Left" << endl;
-            currentOrientation += 26;
-            break;
-        case '[':
-            {
-            // push position and angle to stack
-            cout << "Push to Stack" << endl;
-            // VERTEX POSITION
-            Vec4 pushVector4 = {
-                currentPosition.x,
-                currentPosition.y,
-                currentPosition.z,
-                currentOrientation
-                };
-            VectorHistory.push({ pushVector4 });
-
-            // INDEX
-			IndexHistory.push(currentIndex);
-            break;
-            }
-        case ']':
-            // pop position and angle from stack
-            cout << "Pop from Stack" << endl;
-
-			// VERTEX POSITION
-            Vec4 LastPosition = VectorHistory.top();
-			// reset current position to the last pushed position
-            currentPosition.x = LastPosition.x;
-            currentPosition.y = LastPosition.y;
-            currentPosition.z = LastPosition.z;
-			currentOrientation = LastPosition.radians; // reset orientation
-            VectorHistory.pop();
-
-            // INDEX
-            currentIndices.push_back(IndexHistory.top());
-            IndexHistory.pop();
-
-            lineIndicesArray.push_back(currentIndices);
-            break;
-        default:
-            // ignore unrecognized characters
-            break;
-	    }
-
-    }
-    cout << lineIndicesArray.size() << endl;
-    for (int i = 0; i < lineIndicesArray.size(); ++i) {
-        for (int j = 0; j < lineIndicesArray[i].size(); ++j) {
-            cout << lineIndicesArray[i][j] << ", ";
+        for (int i = 0; i < vertices.size(); ++i) {
+                Vec3 Vector = vertices[i];
+                lines.push_back(Vector.x);
+                lines.push_back(Vector.y);
+                lines.push_back(Vector.z);
+                
         }
-        cout << endl;
-	}
-	
+
+        cout << "vec3list" << endl;
+        cout << "[";
+        for (int i = 0; i < lines.size(); ++i) {
+            cout << lines[i] << ", ";
+        }
+        cout << "]" << endl;
+
+        return;
+    }
+
+    float DegToRad(float degrees) {
+        return degrees * M_PI / 180;
+    }
+
+    void TurtleGraphics::PlotLsystem() {
+        float unit = 0.01f;
+        float angleDeg = 26.0f;
+
+        // This vector stores all the indices for the current line being drawn
+        vector<unsigned int> currentIndices;
 
 
 
-	return;
-}
+        unsigned int GeometryIndices[] =
+        {
+             0,
+        };
+
+        Vec4 startPoint = { 0.0f, 0.0f, 0.0f, 0.0f };
+        vertices.push_back(Vec3({ 0.0f, 0.0f, 0.0f }));
+
+
+        // Lindenmayer System
+
+        // Step 1 Defining Axiom
+        string axiom = "X";
+
+        // Step 2 define production rules e.g. A --> AAB
+        unordered_map<char, string> rules;
+
+        /*rules['A'] = "AB";
+        rules['B'] = "A";*/
+
+        
+        rules['X'] = "F[+X]F[-X]+X";
+        rules['F'] = "FF";
+
+        string currentLSystem = Lsystem(axiom, rules, 5);
+
+        // Get the History of All Push and Pop Operations
+        stack<Vec4> VectorHistory;
+        VectorHistory.push({ startPoint });
+
+        // Get the History of All Push and Pop points and where they are in the index
+        stack<int> IndexHistory;
+        IndexHistory.push({ 0 });
+
+
+
+        Vec3 currentPosition = vertices[0];
+        float currentOrientation = 0.0f; // in radians
+        int currentIndex = 0;
+
+        cout << currentLSystem << endl;
+        for (int i = 0; i < currentLSystem.length(); ++i) {
+            char command = currentLSystem[i];
+
+            switch (command) {
+            case 'F':
+                // draw forward
+                cout << "Draw Forward" << endl;
+                // code to draw a line forward
+
+                //VERTEX POSITION
+                currentPosition.x += unit * sin(currentOrientation); // move the start point up by 0.1 units
+                currentPosition.y += unit * cos(currentOrientation);
+                vertices.push_back(currentPosition);
+
+                // INDEX POS
+                currentIndex++;
+                currentIndices.push_back(currentIndex);
+                break;
+            case '+':
+                // turn right
+                cout << "Turn Right" << endl;
+                currentOrientation -= DegToRad(angleDeg);
+                break;
+            case '-':
+                // turn left
+                cout << "Turn Left" << endl;
+                currentOrientation += DegToRad(angleDeg);
+                break;
+            case '[':
+            {
+                // push position and angle to stack
+                cout << "Push to Stack" << endl;
+                // VERTEX POSITION
+                Vec4 pushVector4 = {
+                    currentPosition.x,
+                    currentPosition.y,
+                    currentPosition.z,
+                    currentOrientation
+                };
+                VectorHistory.push({ pushVector4 });
+
+                // INDEX
+                IndexHistory.push(currentIndex);
+                break;
+            }
+            case ']':
+                // pop position and angle from stack
+                cout << "Pop from Stack" << endl;
+
+                // VERTEX POSITION
+                Vec4 LastPosition = VectorHistory.top();
+                // reset current position to the last pushed position
+                currentPosition.x = LastPosition.x;
+                currentPosition.y = LastPosition.y;
+                currentPosition.z = LastPosition.z;
+                currentOrientation = LastPosition.radians; // reset orientation
+                VectorHistory.pop();
+
+                // INDEX
+                if (!currentIndices.empty()) {
+                    lineIndicesArray.push_back(currentIndices);
+                    currentIndices.clear();
+                }
+
+                if (!IndexHistory.empty()) {
+                    currentIndices.push_back(IndexHistory.top());
+                    IndexHistory.pop();
+                }
+
+
+                break;
+            default:
+                // ignore unrecognized characters
+                break;
+            }
+
+        }
+        //convert vector to C array
+        //int* verticesArray = &vertices[0];
+
+        //for (int i = 0; i < vertices.size(); ++i) {
+
+        //    cout << "Vertex " << i << " X:" << vertices[i].x << " Y:" << vertices[i].y << endl;
+
+        //    cout << endl;
+        //}
+
+
+        //for (int i = 0; i < lineIndicesArray.size(); ++i) {
+        //    for (int j = 0; j < lineIndicesArray[i].size(); ++j) {
+        //        cout << lineIndicesArray[i][j] << ", ";
+        //    }
+        //    cout << endl;
+        //}
+
+        //LSystemData tmp = {
+        //lineIndicesArray,
+        //vertices
+        //};
+
+        //vertices = tmp.vertices;
+        //lineIndicesArray = tmp.lineIndicesArray;
+
+
+        return;
+    }
+
+    void TurtleGraphics::FlattenIndices() {
+        for (const auto& seq : lineIndicesArray) {
+            if (seq.size() < 2) continue;
+            for (size_t j = 1; j < seq.size(); ++j) {
+                indices.push_back(seq[j - 1]);
+                indices.push_back(seq[j]);
+            }
+        }
+    }
+
+
 
 int main(void)
 {
@@ -179,7 +231,7 @@ int main(void)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(800, 600, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(1920, 1080, "Hello World", NULL, NULL);
     if (!window)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -198,7 +250,7 @@ int main(void)
         return -1;
     }
 
-    glViewport(0, 0, 800, 600);
+    glViewport(0, 0, 1920, 1080);
     
    
     //if(glewInit() != GLEW_OK){
@@ -247,16 +299,21 @@ int main(void)
        1, 2, 3    // second triangle
    }; 
 
-   float lines[] =
-   {
-        0.5f, 0.8f, 0.0f,
-        0.5f, -0.8f, 0.0f
-   };
+   TurtleGraphics turtleGraphics;
+   turtleGraphics.PlotLsystem();
+   turtleGraphics.ConvertVec3List();
+   turtleGraphics.FlattenIndices();
+   
+   //float lines[] =
+   //{
+   //     0.5f, 0.8f, 0.0f,
+   //     0.5f, -0.8f, 0.0f
+   //};
 
-   unsigned int linesIndices[] =
-   {
-        0, 1, 0, 1
-   };
+   //unsigned int linesIndices[] =
+   //{
+   //     0, 1, 0, 1
+   //};
 
    // VAO, VBOs and EBOs Array for the number of objects in the scene.
    unsigned int VBOs[3], VAOs[3], EBOs[3];
@@ -298,16 +355,33 @@ int main(void)
    glEnableVertexAttribArray(0);  
    glBindVertexArray(0);
 
-// Line Drawing
+//// Line Drawing
+//   //Bind Vertex array object
+//   glBindVertexArray(VAOs[2]);
+//   // 0. copy our vertices array in a buffer for OpenGL to use
+//   glBindBuffer(GL_ARRAY_BUFFER, VBOs[2]);
+//   // Linking Vertex Attributes location = 0, vec3
+//   glBufferData(GL_ARRAY_BUFFER, sizeof(lines), lines, GL_STATIC_DRAW);
+//
+//   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBOs[2]);
+//   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(linesIndices), linesIndices, GL_STATIC_DRAW);
+//
+//   // 1. then set the vertex attributes pointers
+//   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+//   glEnableVertexAttribArray(0);
+//   glBindVertexArray(0);
+
+   // Line Drawing
    //Bind Vertex array object
    glBindVertexArray(VAOs[2]);
    // 0. copy our vertices array in a buffer for OpenGL to use
    glBindBuffer(GL_ARRAY_BUFFER, VBOs[2]);
    // Linking Vertex Attributes location = 0, vec3
-   glBufferData(GL_ARRAY_BUFFER, sizeof(lines), lines, GL_STATIC_DRAW);
+   glBufferData(GL_ARRAY_BUFFER, sizeof(float) * turtleGraphics.lines.size(), turtleGraphics.lines.data() , GL_STATIC_DRAW);
 
    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBOs[2]);
-   glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(linesIndices), linesIndices, GL_STATIC_DRAW);
+   glBufferData(GL_ELEMENT_ARRAY_BUFFER, turtleGraphics.indices.size() * sizeof(unsigned int),
+       turtleGraphics.indices.data(), GL_STATIC_DRAW);
 
    // 1. then set the vertex attributes pointers
    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
@@ -414,7 +488,6 @@ int main(void)
        glDeleteShader(fragmentShaderYellow);
 
 // RENDER LOOP
-       PlotLsystem();
        /* Loop until the user closes the window */
        while (!glfwWindowShouldClose(window))
        {
@@ -424,20 +497,6 @@ int main(void)
            /* Render here */
            glClearColor(0.2f, 0.3f, 0.3f, 1.0f); // background color
            glClear(GL_COLOR_BUFFER_BIT);
-
-           // This works
-           // glBegin(GL_POLYGON);
-           // glVertex2f(-0.5f, -0.5f);
-           // glVertex2f(0.5f, -0.5f);
-           // glVertex2f(0.5f, 0.5f);
-           // glVertex2f(-0.5f, 0.5f);
-           // glEnd();
-
-            // Classic OpenGL Line
-           //glBegin(GL_LINES);
-           //glVertex3f(0.5f, 0.5f, 0.0f);
-           //glVertex3f(0.5f, -0.5f, 0.0f);
-           //glEnd();
 
            /*Code To print First Square*/
            // 2. use our shader program when we want to render an object
@@ -461,9 +520,29 @@ int main(void)
            // 3. now draw the object
            glBindVertexArray(VAOs[2]); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
 
-           int vertexCount = sizeof(lines) / 12;
+           glLineWidth(2);
+
+           //This works
+            /*glBegin(GL_POLYGON);
+            glVertex2f(-0.5f, -0.5f);
+            glVertex2f(0.5f, -0.5f);
+            glVertex2f(0.5f, 0.5f);
+            glVertex2f(-0.5f, 0.5f);
+            glEnd();*/
+
+            // Classic OpenGL Line
+           /*glBegin(GL_LINES);
+           glVertex3f(0.5f, 0.5f, 0.0f);
+           glVertex3f(0.5f, -0.5f, 0.0f);
+           glEnd();*/
+
+
+           /*int vertexCount = sizeof(lines) / 12;*/
            //std:cout << "Vertex Count: " << vertexCount << endl;
-           glDrawArrays(GL_LINES, 0, vertexCount);
+           if (!turtleGraphics.indices.empty()) {
+               glDrawElements(GL_LINES, turtleGraphics.indices.size(), GL_UNSIGNED_INT, 0);
+           }
+           glBindVertexArray(0);
 
            /* Poll for and process events */
            glfwPollEvents();
@@ -474,9 +553,9 @@ int main(void)
    
    // optional: de-allocate all resources once they've outlived their purpose:
    // ------------------------------------------------------------------------
-   glDeleteVertexArrays(2, VAOs);
-   glDeleteBuffers(2, VBOs);
-   glDeleteBuffers(2, EBOs);
+   glDeleteVertexArrays(3, VAOs);
+   glDeleteBuffers(3, VBOs);
+   glDeleteBuffers(3, EBOs);
    glDeleteProgram(shaderProgramOrange);
    glDeleteProgram(shaderProgramYellow);
 

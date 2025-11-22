@@ -1,22 +1,21 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Spike\\Documents\\OpenGL\\Projects\\",
+  "WorkspaceRootPath": "C:\\Users\\spike\\Documents\\OpenGL\\Projects\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{560853CB-200B-5385-0F0D-72AE1E4DFFB4}|Tutorial\\OpenGLTutorial.vcxproj|C:\\Users\\Spike\\Documents\\OpenGL\\Projects\\Tutorial\\LSystem.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{560853CB-200B-5385-0F0D-72AE1E4DFFB4}|Tutorial\\OpenGLTutorial.vcxproj|solutionrelative:Tutorial\\LSystem.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{560853CB-200B-5385-0F0D-72AE1E4DFFB4}|Tutorial\\OpenGLTutorial.vcxproj|C:\\Users\\Spike\\Documents\\OpenGL\\Projects\\Tutorial\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{560853CB-200B-5385-0F0D-72AE1E4DFFB4}|Tutorial\\OpenGLTutorial.vcxproj|C:\\Users\\spike\\Documents\\OpenGL\\Projects\\Tutorial\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{560853CB-200B-5385-0F0D-72AE1E4DFFB4}|Tutorial\\OpenGLTutorial.vcxproj|solutionrelative:Tutorial\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{560853CB-200B-5385-0F0D-72AE1E4DFFB4}|Tutorial\\OpenGLTutorial.vcxproj|C:\\Users\\Spike\\Documents\\OpenGL\\Projects\\Tutorial\\LSystem.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "AbsoluteMoniker": "D:0:0:{560853CB-200B-5385-0F0D-72AE1E4DFFB4}|Tutorial\\OpenGLTutorial.vcxproj|C:\\Users\\spike\\Documents\\OpenGL\\Projects\\Tutorial\\LSystem.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{560853CB-200B-5385-0F0D-72AE1E4DFFB4}|Tutorial\\OpenGLTutorial.vcxproj|solutionrelative:Tutorial\\LSystem.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{560853CB-200B-5385-0F0D-72AE1E4DFFB4}|Tutorial\\OpenGLTutorial.vcxproj|C:\\Users\\spike\\Documents\\OpenGL\\Projects\\Tutorial\\LSystem.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{560853CB-200B-5385-0F0D-72AE1E4DFFB4}|Tutorial\\OpenGLTutorial.vcxproj|solutionrelative:Tutorial\\LSystem.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{560853CB-200B-5385-0F0D-72AE1E4DFFB4}|Tutorial\\OpenGLTutorial.vcxproj|C:\\Users\\Spike\\Documents\\OpenGL\\Projects\\Tutorial\\main.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{560853CB-200B-5385-0F0D-72AE1E4DFFB4}|Tutorial\\OpenGLTutorial.vcxproj|solutionrelative:Tutorial\\main.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\include\\vector||{3B902123-F8A7-4915-9F01-361F908088D0}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -25,65 +24,59 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedWidth": 200,
+          "DockedWidth": 261,
           "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "main.h",
-              "DocumentMoniker": "C:\\Users\\Spike\\Documents\\OpenGL\\Projects\\Tutorial\\main.h",
-              "RelativeDocumentMoniker": "Tutorial\\main.h",
-              "ToolTip": "C:\\Users\\Spike\\Documents\\OpenGL\\Projects\\Tutorial\\main.h",
-              "RelativeToolTip": "Tutorial\\main.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAATAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2025-11-18T20:26:36.075Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 2,
               "Title": "LSystem.h",
-              "DocumentMoniker": "C:\\Users\\Spike\\Documents\\OpenGL\\Projects\\Tutorial\\LSystem.h",
+              "DocumentMoniker": "C:\\Users\\spike\\Documents\\OpenGL\\Projects\\Tutorial\\LSystem.h",
               "RelativeDocumentMoniker": "Tutorial\\LSystem.h",
-              "ToolTip": "C:\\Users\\Spike\\Documents\\OpenGL\\Projects\\Tutorial\\LSystem.h",
+              "ToolTip": "C:\\Users\\spike\\Documents\\OpenGL\\Projects\\Tutorial\\LSystem.h",
               "RelativeToolTip": "Tutorial\\LSystem.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAoAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
               "WhenOpened": "2025-11-07T01:30:36.57Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "LSystem.cpp",
-              "DocumentMoniker": "C:\\Users\\Spike\\Documents\\OpenGL\\Projects\\Tutorial\\LSystem.cpp",
+              "DocumentMoniker": "C:\\Users\\spike\\Documents\\OpenGL\\Projects\\Tutorial\\LSystem.cpp",
               "RelativeDocumentMoniker": "Tutorial\\LSystem.cpp",
-              "ToolTip": "C:\\Users\\Spike\\Documents\\OpenGL\\Projects\\Tutorial\\LSystem.cpp",
+              "ToolTip": "C:\\Users\\spike\\Documents\\OpenGL\\Projects\\Tutorial\\LSystem.cpp",
               "RelativeToolTip": "Tutorial\\LSystem.cpp",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAABsAAAAVAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-11-06T23:57:36.97Z",
               "EditorCaption": ""
-            }
-          ]
-        },
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
+            },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "main.cpp",
-              "DocumentMoniker": "C:\\Users\\Spike\\Documents\\OpenGL\\Projects\\Tutorial\\main.cpp",
+              "DocumentMoniker": "C:\\Users\\spike\\Documents\\OpenGL\\Projects\\Tutorial\\main.cpp",
               "RelativeDocumentMoniker": "Tutorial\\main.cpp",
-              "ToolTip": "C:\\Users\\Spike\\Documents\\OpenGL\\Projects\\Tutorial\\main.cpp",
+              "ToolTip": "C:\\Users\\spike\\Documents\\OpenGL\\Projects\\Tutorial\\main.cpp",
               "RelativeToolTip": "Tutorial\\main.cpp",
-              "ViewState": "AgIAAHEAAAAAAAAAAAAnwHwAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAACYAAAAAAAAAAAAawDcAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-11-03T21:39:49.125Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "vector",
+              "DocumentMoniker": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\include\\vector",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\include\\vector",
+              "ToolTip": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\include\\vector",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.44.35207\\include\\vector",
+              "ViewState": "AgIAAHgHAAAAAAAAAAAuwIkHAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-11-22T20:29:59.726Z",
               "EditorCaption": ""
             }
           ]
