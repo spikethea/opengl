@@ -1,2 +1,7 @@
-﻿  LSystem.cpp
+﻿  main.cpp
+C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\main.cpp(7,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\main.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  (compiling source file 'main.cpp')
+  
+C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\main.cpp(8,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
   OpenGLTutorial.vcxproj -> C:\Users\Spike\Documents\OpenGL\Projects\x64\Debug\OpenGLTutorial.exe

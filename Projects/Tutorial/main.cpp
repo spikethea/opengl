@@ -155,7 +155,12 @@ void PlotLsystem() {
 	    }
 
     }
-    cout << lineIndicesArray.size() << endl;
+    for (int i = 0; i < vertices.size(); ++i) {
+        
+            cout << "Vertex "<< i << " X:" << vertices[i].x << " Y:" << vertices[i].y << endl;
+
+        cout << endl;
+    }
     for (int i = 0; i < lineIndicesArray.size(); ++i) {
         for (int j = 0; j < lineIndicesArray[i].size(); ++j) {
             cout << lineIndicesArray[i][j] << ", ";
