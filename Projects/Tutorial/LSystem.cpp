@@ -22,15 +22,17 @@ string applyRules(const string& current, const unordered_map<char, string>& rule
 	return next;
 }
 
-string Lsystem(string axiom, unordered_map<char, string> rules) {
+string Lsystem(string axiom, unordered_map<char, string> rules, int iterations) {
 
 	// Step 3 How many iterations are we going to do?
-	int interactions = 1;
+	int interactions = iterations;
 	// Step 4 Apply rules in number of interations
 	string current = axiom;
 	for (int i = 0; i < interactions; ++i) {
 		current = applyRules(current, rules);
-		//cout << "Iteration " << i + 1 << ": " << current << "\n";
+
+		cout << "Iteration " << i + 1 << ": " << current << "\n";
+
 	}
 
 	return current;

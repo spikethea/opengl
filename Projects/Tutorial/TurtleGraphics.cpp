@@ -1,3 +1,17 @@
+<<<<<<< HEAD
+#include "TurtleGraphics.h"
+#include "LSystem.h";
+
+TurtleGraphics::TurtleGraphics(LSystem lsystem) {
+	direction = degToRad(-90);
+
+}
+
+string TurtleGraphics()
+{
+	return string();
+}
+=======
 // turtle_opengl.cpp
 // Minimal Turtle Graphics system using OpenGL 3.3, GLFW and GLAD
 // Single-file example: maintains a list of line segments and renders them
@@ -100,3 +114,4 @@ GLuint compileShader(GLenum type, const char* src) {
 
 
 void setupGL() {
+>>>>>>> 5f5a8ce24e46dd3a502b78bfe3607ed33eff6118
