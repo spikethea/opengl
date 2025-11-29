@@ -9,6 +9,11 @@
 #include <stack>;
 #include <corecrt_math_defines.h>
 
+#include <imgui.h>
+#include <imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.h>
+// Do not include imgui loader.h!
+
 using namespace std;
 
 /*resize the viewport to the window when the user resizes*/
@@ -24,7 +29,11 @@ void processInput(GLFWwindow *window)
        glfwSetWindowShouldClose(window, true);
 }
 
-
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_E && action == GLFW_PRESS)
+        cout << "Pressed E" << endl;
+}
 
 
     
@@ -230,6 +239,8 @@ int main(void)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+
     /* Create a windowed mode window and its OpenGL context */
     window = glfwCreateWindow(1920, 1080, "Hello World", NULL, NULL);
     if (!window)
@@ -242,6 +253,9 @@ int main(void)
 
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
+
+     
+    glfwSetKeyCallback(window, key_callback);
 
     // Initialise GLAD before calling any OpenGL Function
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -487,6 +501,16 @@ int main(void)
        glDeleteShader(fragmentShaderOrange);
        glDeleteShader(fragmentShaderYellow);
 
+	   // INITIALIZE IMGUI CONTEXT
+	   IMGUI_CHECKVERSION();
+	   ImGui::CreateContext();
+	   ImGuiIO& io = ImGui::GetIO(); (void)io;
+       ImGui::StyleColorsDark();
+	   ImGui_ImplGlfw_InitForOpenGL(window, true);
+       ImGui_ImplOpenGL3_Init("#version 330");
+
+       
+
 // RENDER LOOP
        /* Loop until the user closes the window */
        while (!glfwWindowShouldClose(window))
@@ -494,9 +518,24 @@ int main(void)
            //input
            processInput(window);
 
+           /* Poll for and process events, user inputs */
+           glfwPollEvents();
+
            /* Render here */
            glClearColor(0.2f, 0.3f, 0.3f, 1.0f); // background color
            glClear(GL_COLOR_BUFFER_BIT);
+
+           // ImGui test
+		   ImGui_ImplOpenGL3_NewFrame();
+           ImGui_ImplGlfw_NewFrame();
+           ImGui::NewFrame();
+
+           // ImGui window
+           {
+               ImGui::Begin("My Window");                          // Create a window called "Hello, ImGui!" and append into it.
+               ImGui::Text("L System");               // Display some text (you can use a format strings too)
+               ImGui::End();
+		   }
 
            /*Code To print First Square*/
            // 2. use our shader program when we want to render an object
@@ -544,12 +583,18 @@ int main(void)
            }
            glBindVertexArray(0);
 
-           /* Poll for and process events */
-           glfwPollEvents();
+
+           //ImGui Draw
+           ImGui::Render();
+           ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
            /* Swap front and back buffers */
            glfwSwapBuffers(window);
        }
-
+//IMGUI CLEANUP
+       ImGui_ImplOpenGL3_Shutdown();
+       ImGui_ImplGlfw_Shutdown();
+	   ImGui::DestroyContext();
    
    // optional: de-allocate all resources once they've outlived their purpose:
    // ------------------------------------------------------------------------

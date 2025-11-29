@@ -26,3 +26,5 @@ struct LSystemData
 	vector<vector<unsigned int>> lineIndicesArray;
 	vector<Vec3> vertices;
 };
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
