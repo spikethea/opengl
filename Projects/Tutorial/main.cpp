@@ -9,6 +9,9 @@
 #include <stack>;
 #include <corecrt_math_defines.h>
 
+
+#include "TurtleGraphics.h";
+
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
@@ -36,7 +39,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 }
 
 
-    
+/*
     void TurtleGraphics::ConvertVec3List() {
 
         for (int i = 0; i < vertices.size(); ++i) {
@@ -57,10 +60,13 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         return;
     }
 
-    float DegToRad(float degrees) {
-        return degrees * M_PI / 180;
-    }
+    */
 
+    //float DegToRad(float degrees) {
+    //    return degrees * M_PI / 180;
+    //}
+
+    /*
     void TurtleGraphics::PlotLsystem() {
         float unit = 0.01f;
         float angleDeg = 26.0f;
@@ -87,8 +93,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         // Step 2 define production rules e.g. A --> AAB
         unordered_map<char, string> rules;
 
-        /*rules['A'] = "AB";
-        rules['B'] = "A";*/
+        //rules['A'] = "AB";
+        //rules['B'] = "A";
 
         
         rules['X'] = "F[+X]F[-X]+X";
@@ -228,7 +234,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         }
     }
 
-
+    */
 
 int main(void)
 {
@@ -311,12 +317,24 @@ int main(void)
    unsigned int secondSquareIndices[] = {  // note that we start from 0!
        0, 1, 3,   // first triangle
        1, 2, 3    // second triangle
-   }; 
+   };
 
-   TurtleGraphics turtleGraphics;
-   turtleGraphics.PlotLsystem();
-   turtleGraphics.ConvertVec3List();
-   turtleGraphics.FlattenIndices();
+
+    // Lindenmayer System
+
+    // Step 1 Defining Axiom
+    string axiom = "X";
+
+    // Step 2 define production rules e.g. A --> AAB
+    unordered_map<char, string> rules;
+
+    rules['X'] = "F[+X]F[-X]+X";
+    rules['F'] = "FF";
+
+	int iterations = 6;
+
+    string currentLSystem = Lsystem(axiom, rules, iterations);
+    LSystemMesh lSystemMesh(currentLSystem);
    
    //float lines[] =
    //{
@@ -330,10 +348,10 @@ int main(void)
    //};
 
    // VAO, VBOs and EBOs Array for the number of objects in the scene.
-   unsigned int VBOs[3], VAOs[3], EBOs[3];
-   glGenVertexArrays(3, VAOs); 
-   glGenBuffers(3, VBOs);
-   glGenBuffers(3, EBOs);
+   unsigned int VBOs[2], VAOs[2], EBOs[2];
+   glGenVertexArrays(2, VAOs); 
+   glGenBuffers(2, VBOs);
+   glGenBuffers(2, EBOs);
    
 // First Square
 
@@ -386,21 +404,7 @@ int main(void)
 //   glBindVertexArray(0);
 
    // Line Drawing
-   //Bind Vertex array object
-   glBindVertexArray(VAOs[2]);
-   // 0. copy our vertices array in a buffer for OpenGL to use
-   glBindBuffer(GL_ARRAY_BUFFER, VBOs[2]);
-   // Linking Vertex Attributes location = 0, vec3
-   glBufferData(GL_ARRAY_BUFFER, sizeof(float) * turtleGraphics.lines.size(), turtleGraphics.lines.data() , GL_STATIC_DRAW);
-
-   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBOs[2]);
-   glBufferData(GL_ELEMENT_ARRAY_BUFFER, turtleGraphics.indices.size() * sizeof(unsigned int),
-       turtleGraphics.indices.data(), GL_STATIC_DRAW);
-
-   // 1. then set the vertex attributes pointers
-   glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-   glEnableVertexAttribArray(0);
-   glBindVertexArray(0);
+   lSystemMesh.uploadMeshToGPU();
 
    
 
@@ -554,12 +558,8 @@ int main(void)
            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
            /*Code To print Lines*/
-           // 2. use our shader program when we want to render an object
            glUseProgram(shaderProgramOrange);
-           // 3. now draw the object
-           glBindVertexArray(VAOs[2]); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-
-           glLineWidth(2);
+		   lSystemMesh.DrawMesh();
 
            //This works
             /*glBegin(GL_POLYGON);
@@ -578,10 +578,7 @@ int main(void)
 
            /*int vertexCount = sizeof(lines) / 12;*/
            //std:cout << "Vertex Count: " << vertexCount << endl;
-           if (!turtleGraphics.indices.empty()) {
-               glDrawElements(GL_LINES, turtleGraphics.indices.size(), GL_UNSIGNED_INT, 0);
-           }
-           glBindVertexArray(0);
+
 
 
            //ImGui Draw

@@ -163,7 +163,15 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="TurtleGraphics.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="treejs.json" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties treejs_1json__JsonSchema="https://json-schema.org/draft/2020-12/schema" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
