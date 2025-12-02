@@ -54,8 +54,8 @@
     <ClCompile Include="external\imgui\imgui_widgets.cpp">
       <Filter>Source Files\imgui</Filter>
     </ClCompile>
-    <ClCompile Include="TurtleGraphics.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="LSystemMesh.h">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -110,7 +110,7 @@
     <ClInclude Include="external\imgui\imgui.h">
       <Filter>Header Files\imgui</Filter>
     </ClInclude>
-    <ClInclude Include="TurtleGraphics.h">
+    <ClInclude Include="App.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

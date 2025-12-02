@@ -1,16 +1,14 @@
 #include <iostream>
-
-//#include <GL/glew.h>
 #include <glad/glad.h> 
 #include <GLFW/glfw3.h>
 #define _USE_MATH_DEFINES
 #include <cmath>
-#include "main.h";
+
 #include <stack>;
 #include <corecrt_math_defines.h>
 
-
-#include "TurtleGraphics.h";
+#include "main.h"
+#include "App.h"
 
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
@@ -32,209 +30,8 @@ void processInput(GLFWwindow *window)
        glfwSetWindowShouldClose(window, true);
 }
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    if (key == GLFW_KEY_E && action == GLFW_PRESS)
-        cout << "Pressed E" << endl;
-}
 
 
-/*
-    void TurtleGraphics::ConvertVec3List() {
-
-        for (int i = 0; i < vertices.size(); ++i) {
-                Vec3 Vector = vertices[i];
-                lines.push_back(Vector.x);
-                lines.push_back(Vector.y);
-                lines.push_back(Vector.z);
-                
-        }
-
-        cout << "vec3list" << endl;
-        cout << "[";
-        for (int i = 0; i < lines.size(); ++i) {
-            cout << lines[i] << ", ";
-        }
-        cout << "]" << endl;
-
-        return;
-    }
-
-    */
-
-    //float DegToRad(float degrees) {
-    //    return degrees * M_PI / 180;
-    //}
-
-    /*
-    void TurtleGraphics::PlotLsystem() {
-        float unit = 0.01f;
-        float angleDeg = 26.0f;
-
-        // This vector stores all the indices for the current line being drawn
-        vector<unsigned int> currentIndices;
-
-
-
-        unsigned int GeometryIndices[] =
-        {
-             0,
-        };
-
-        Vec4 startPoint = { 0.0f, 0.0f, 0.0f, 0.0f };
-        vertices.push_back(Vec3({ 0.0f, 0.0f, 0.0f }));
-
-
-        // Lindenmayer System
-
-        // Step 1 Defining Axiom
-        string axiom = "X";
-
-        // Step 2 define production rules e.g. A --> AAB
-        unordered_map<char, string> rules;
-
-        //rules['A'] = "AB";
-        //rules['B'] = "A";
-
-        
-        rules['X'] = "F[+X]F[-X]+X";
-        rules['F'] = "FF";
-
-        string currentLSystem = Lsystem(axiom, rules, 5);
-
-        // Get the History of All Push and Pop Operations
-        stack<Vec4> VectorHistory;
-        VectorHistory.push({ startPoint });
-
-        // Get the History of All Push and Pop points and where they are in the index
-        stack<int> IndexHistory;
-        IndexHistory.push({ 0 });
-
-
-
-        Vec3 currentPosition = vertices[0];
-        float currentOrientation = 0.0f; // in radians
-        int currentIndex = 0;
-
-        cout << currentLSystem << endl;
-        for (int i = 0; i < currentLSystem.length(); ++i) {
-            char command = currentLSystem[i];
-
-            switch (command) {
-            case 'F':
-                // draw forward
-                cout << "Draw Forward" << endl;
-                // code to draw a line forward
-
-                //VERTEX POSITION
-                currentPosition.x += unit * sin(currentOrientation); // move the start point up by 0.1 units
-                currentPosition.y += unit * cos(currentOrientation);
-                vertices.push_back(currentPosition);
-
-                // INDEX POS
-                currentIndex++;
-                currentIndices.push_back(currentIndex);
-                break;
-            case '+':
-                // turn right
-                cout << "Turn Right" << endl;
-                currentOrientation -= DegToRad(angleDeg);
-                break;
-            case '-':
-                // turn left
-                cout << "Turn Left" << endl;
-                currentOrientation += DegToRad(angleDeg);
-                break;
-            case '[':
-            {
-                // push position and angle to stack
-                cout << "Push to Stack" << endl;
-                // VERTEX POSITION
-                Vec4 pushVector4 = {
-                    currentPosition.x,
-                    currentPosition.y,
-                    currentPosition.z,
-                    currentOrientation
-                };
-                VectorHistory.push({ pushVector4 });
-
-                // INDEX
-                IndexHistory.push(currentIndex);
-                break;
-            }
-            case ']':
-                // pop position and angle from stack
-                cout << "Pop from Stack" << endl;
-
-                // VERTEX POSITION
-                Vec4 LastPosition = VectorHistory.top();
-                // reset current position to the last pushed position
-                currentPosition.x = LastPosition.x;
-                currentPosition.y = LastPosition.y;
-                currentPosition.z = LastPosition.z;
-                currentOrientation = LastPosition.radians; // reset orientation
-                VectorHistory.pop();
-
-                // INDEX
-                if (!currentIndices.empty()) {
-                    lineIndicesArray.push_back(currentIndices);
-                    currentIndices.clear();
-                }
-
-                if (!IndexHistory.empty()) {
-                    currentIndices.push_back(IndexHistory.top());
-                    IndexHistory.pop();
-                }
-
-
-                break;
-            default:
-                // ignore unrecognized characters
-                break;
-            }
-
-        }
-        //convert vector to C array
-        //int* verticesArray = &vertices[0];
-
-        //for (int i = 0; i < vertices.size(); ++i) {
-
-        //    cout << "Vertex " << i << " X:" << vertices[i].x << " Y:" << vertices[i].y << endl;
-
-        //    cout << endl;
-        //}
-
-
-        //for (int i = 0; i < lineIndicesArray.size(); ++i) {
-        //    for (int j = 0; j < lineIndicesArray[i].size(); ++j) {
-        //        cout << lineIndicesArray[i][j] << ", ";
-        //    }
-        //    cout << endl;
-        //}
-
-        //LSystemData tmp = {
-        //lineIndicesArray,
-        //vertices
-        //};
-
-        //vertices = tmp.vertices;
-        //lineIndicesArray = tmp.lineIndicesArray;
-
-
-        return;
-    }
-
-    void TurtleGraphics::FlattenIndices() {
-        for (const auto& seq : lineIndicesArray) {
-            if (seq.size() < 2) continue;
-            for (size_t j = 1; j < seq.size(); ++j) {
-                indices.push_back(seq[j - 1]);
-                indices.push_back(seq[j]);
-            }
-        }
-    }
-
-    */
 
 int main(void)
 {
@@ -260,8 +57,10 @@ int main(void)
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
 
-     
-    glfwSetKeyCallback(window, key_callback);
+    App app;
+    app.init(window);
+
+    glfwSetKeyCallback(window, &app.keyCallback);
 
     // Initialise GLAD before calling any OpenGL Function
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -322,19 +121,79 @@ int main(void)
 
     // Lindenmayer System
 
-    // Step 1 Defining Axiom
-    string axiom = "X";
 
+    // Step 1 Defining Axiom
+    string axiom = "F";
+    int iterations = 5;
     // Step 2 define production rules e.g. A --> AAB
     unordered_map<char, string> rules;
+
+
+    rules['F'] = "F[+F]F[-F]F";
+
+    string currentLSystem = Lsystem(axiom, rules, iterations);
+    app.trees.push_back(LSystemMesh(currentLSystem, 0.05f, 25.7f));
+    
+    
+	//2nd L-System
+
+    // Step 2 define production rules e.g. A --> AAB
+    rules.clear();
+
+    rules['F'] = "F[+F]F[-F][F]";
+
+    currentLSystem = Lsystem(axiom, rules, iterations);
+    app.trees.push_back(LSystemMesh(currentLSystem, 0.05f, 20.0f));
+
+    //3rd L-System
+    rules.clear();
+	iterations = 4;
+
+    rules['F'] = "FF[-F+F+F]+[+F-F-F]";
+
+    currentLSystem = Lsystem(axiom, rules, iterations);
+    app.trees.push_back(LSystemMesh(currentLSystem, 0.05f, 22.5f));
+
+
+// EDGE REWRITING L_SYSTEMS
+    axiom = "X";
+
+	// 4th L-System
+
+	rules.clear();
+    iterations = 7;
 
     rules['X'] = "F[+X]F[-X]+X";
     rules['F'] = "FF";
 
-	int iterations = 6;
+    currentLSystem = Lsystem(axiom, rules, iterations);
+    app.trees.push_back(LSystemMesh(currentLSystem, 0.05f, 20.0f));
 
-    string currentLSystem = Lsystem(axiom, rules, iterations);
-    LSystemMesh lSystemMesh(currentLSystem);
+	// 5th L-System
+
+    rules.clear();
+    iterations = 7;
+
+    rules['X'] = "F[+X][-X]FX";
+    rules['F'] = "FF";
+
+    currentLSystem = Lsystem(axiom, rules, iterations);
+    app.trees.push_back(LSystemMesh(currentLSystem, 0.05f, 25.7f));
+
+    // 6th L-System
+
+    
+
+    rules.clear();
+    iterations = 5;
+
+    rules['X'] = "F-[[X]+X]+F[+FX]-X";
+    rules['F'] = "FF";
+
+    currentLSystem = Lsystem(axiom, rules, iterations);
+    app.trees.push_back(LSystemMesh(currentLSystem, 0.05f, 25.7f));
+    
+
    
    //float lines[] =
    //{
@@ -404,7 +263,13 @@ int main(void)
 //   glBindVertexArray(0);
 
    // Line Drawing
-   lSystemMesh.uploadMeshToGPU();
+   app.trees[0].uploadMeshToGPU();
+   app.trees[1].uploadMeshToGPU();
+   app.trees[2].uploadMeshToGPU();
+   app.trees[3].uploadMeshToGPU();
+   app.trees[4].uploadMeshToGPU();
+   app.trees[5].uploadMeshToGPU();
+
 
    
 
@@ -559,7 +424,7 @@ int main(void)
 
            /*Code To print Lines*/
            glUseProgram(shaderProgramOrange);
-		   lSystemMesh.DrawMesh();
+		   app.drawCurrentMesh();
 
            //This works
             /*glBegin(GL_POLYGON);

@@ -99,7 +99,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>NotSet</SubSystem>
       <AdditionalLibraryDirectories>C:\Users\spike\Documents\OpenGL\Projects\Tutorial\dependencies\GLFW\lib-vc2022;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
+      <AdditionalDependencies>glfw3.lib;opengl32.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib;/NODEFAULTLIB:MSVCRT</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -141,9 +141,10 @@
     <ClCompile Include="LSystem.cpp" />
     <ClCompile Include="LSystem.h" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="TurtleGraphics.cpp" />
+    <ClCompile Include="LSystemMesh.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="App.h" />
     <ClInclude Include="dependencies\include\glfw\glfw3.h" />
     <ClInclude Include="dependencies\include\glfw\glfw3native.h" />
     <ClInclude Include="dependencies\include\gl\eglew.h" />
@@ -161,7 +162,6 @@
     <ClInclude Include="external\imgui\imstb_truetype.h" />
     <ClInclude Include="header\shaderClass.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="TurtleGraphics.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="treejs.json" />
