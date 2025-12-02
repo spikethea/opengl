@@ -1,46 +1,4 @@
-﻿  App.cpp
-C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\App.h(10,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  (compiling source file 'App.cpp')
-  
-C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\LSystemMesh.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  (compiling source file 'App.cpp')
-  
-C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\LSystemMesh.h(46,31): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-  (compiling source file 'App.cpp')
-  
-C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\LSystemMesh.h(102,50): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  (compiling source file 'App.cpp')
-  
-  imgui.cpp
-  imgui_demo.cpp
-  imgui_draw.cpp
-  imgui_impl_glfw.cpp
-  imgui_impl_opengl3.cpp
-  imgui_tables.cpp
-  imgui_widgets.cpp
-  LSystem.cpp
-  LSystem.h
-  main.cpp
-C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\main.h(8,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  (compiling source file 'main.cpp')
-  
-C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\App.h(10,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  (compiling source file 'main.cpp')
-  
-C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\LSystemMesh.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  (compiling source file 'main.cpp')
-  
-C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\LSystemMesh.h(46,31): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-  (compiling source file 'main.cpp')
-  
-C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\LSystemMesh.h(102,50): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  (compiling source file 'main.cpp')
-  
-  LSystemMesh.h
-C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\LSystemMesh.h(3,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\LSystemMesh.h(46,31): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
-C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\LSystemMesh.h(102,50): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  Generating Code...
-  glad.c
-x64\Debug\LSystem.obj : warning LNK4042: object specified more than once; extras ignored
+﻿  GUI.cpp
+C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\GUI.cpp(23,49): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\GUI.cpp(23,43): warning C4305: 'argument': truncation from 'double' to 'float'
   OpenGLTutorial.vcxproj -> C:\Users\Spike\Documents\OpenGL\Projects\x64\Debug\OpenGLTutorial.exe

@@ -125,26 +125,31 @@ public:
     vector<vector<unsigned int>> lineIndicesArray;
 
     // LSystem parameters
-    string Lsystem;
+    LSystem lSystem;
 
     // Graphics Options
     float unit = 0.01f;
     float angleDeg = 20.0f;
 
-    LSystemMesh(string Lsystem, float unitLength, float angleDeg) {
-        PlotLsystem(Lsystem);
+    LSystemMesh(LSystem Lsystem, float unitLength, float angleDeg) {
+		this->lSystem = Lsystem;
+        this->unit = unitLength;
+		this->angleDeg = angleDeg;
+
+        PlotLsystem(Lsystem.evaluate());
         ConvertVec3List();
         FlattenIndices();
 		
     }
 
-    void updateLSystem(string Lsystem, float unitLength, float angleDeg) {
+    void updateLSystem() {
+		cout << "Updating LSystem Mesh"<< endl << "Iterations: "<< lSystem.iterations << endl;
         vertices.clear();
         lines.clear();
         indices.clear();
         lineIndicesArray.clear();
 
-        PlotLsystem(Lsystem);
+        PlotLsystem(lSystem.evaluate());
         ConvertVec3List();
         FlattenIndices();
         updateVertices(vertices);

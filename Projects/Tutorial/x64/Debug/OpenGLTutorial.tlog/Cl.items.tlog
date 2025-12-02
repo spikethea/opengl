@@ -7,6 +7,7 @@ C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\external\imgui\imgui_impl_open
 C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\external\imgui\imgui_tables.cpp;C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\x64\Debug\imgui_tables.obj
 C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\external\imgui\imgui_widgets.cpp;C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\x64\Debug\imgui_widgets.obj
 C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\glad.c;C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\x64\Debug\glad.obj
+C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\GUI.cpp;C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\x64\Debug\GUI.obj
 C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\LSystem.cpp;C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\x64\Debug\LSystem.obj
 C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\LSystem.h;C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\x64\Debug\LSystem.obj
 C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\main.cpp;C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\x64\Debug\main.obj

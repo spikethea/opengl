@@ -10,34 +10,13 @@ using namespace std;
 struct Vec3 { float x, y, z; };
 struct Vec4 { float x, y, z, radians; };
 
-inline string applyRules(const string& current, const unordered_map<char, string>& rules) {
-	string next;
-	// for C in Current list
-	for (char c : current) {
-		auto it = rules.find(c);
-		if (it != rules.end())
-			// a->b means access the b member in the object a points to
-			// in this case the second character of the unordered_map 
-			next += it->second; // apply rule
-		else
-			next += c; // keep same if no rule
-	}
-	return next;
-}
 
-inline string Lsystem(string axiom, unordered_map<char, string> rules, int iterations) {
-
-	// Step 3 How many iterations are we going to do?
-	int interactions = iterations;
-	// Step 4 Apply rules in number of interations
-	string current = axiom;
-	for (int i = 0; i < interactions; ++i) {
-		current = applyRules(current, rules);
-
-		//cout << "Iteration " << i + 1 << ": " << current << "\n";
-
-	}
-
-	return current;
-}
+class LSystem {
+	public:
+	string axiom = "F";
+	unordered_map<char, string> rules;
+	int iterations;
+	string evaluate();
+	string applyRules(const string& current, const unordered_map<char, string>& rules);
+};
 

@@ -31,7 +31,7 @@ int main(void)
 
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(1920, 1080, "Hello World", NULL, NULL);
+    window = glfwCreateWindow(1920, 1080, "L Systems", NULL, NULL);
     if (!window)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -109,78 +109,67 @@ int main(void)
 
 
     // Step 1 Defining Axiom
-    string axiom = "F";
-    int iterations = 5;
-    // Step 2 define production rules e.g. A --> AAB
-    unordered_map<char, string> rules;
+    LSystem lsystem1;
+    lsystem1.axiom = "F";
+    lsystem1.iterations = 5;
 
 
-    rules['F'] = "F[+F]F[-F]F";
 
-    string currentLSystem = Lsystem(axiom, rules, iterations);
+    lsystem1.rules['F'] = "F[+F]F[-F]F";
 
-    app.trees.emplace_back(currentLSystem, 0.05f, 25.7f);
+    app.trees.emplace_back(lsystem1, 0.02f, 25.7f);
     
     
 	//2nd L-System
-
+    LSystem lsystem2;
     // Step 2 define production rules e.g. A --> AAB
-    rules.clear();
+    lsystem2.axiom = "F";
+    lsystem2.iterations = 5;
+    lsystem2.rules['F'] = "F[+F]F[-F][F]";
 
-    rules['F'] = "F[+F]F[-F][F]";
 
-    currentLSystem = Lsystem(axiom, rules, iterations);
-
-    app.trees.emplace_back(currentLSystem, 0.05f, 20.0f);
+    app.trees.emplace_back(lsystem2, 0.02f, 20.0f);
 
     //3rd L-System
-    rules.clear();
-	iterations = 4;
+    LSystem lsystem3;
+    // Step 2 define production rules e.g. A --> AAB
+    lsystem3.axiom = "F";
+    lsystem3.iterations = 4;
+    lsystem3.rules['F'] = "FF-[-F+F+F]+[+F-F-F]";
 
-    rules['F'] = "FF-[-F+F+F]+[+F-F-F]";
 
-    currentLSystem = Lsystem(axiom, rules, iterations);
-
-    app.trees.emplace_back(currentLSystem, 0.05f, 22.5f);
+    app.trees.emplace_back(lsystem3, 0.02f, 22.5f);
 
 
 // EDGE REWRITING L_SYSTEMS
-    axiom = "X";
+    LSystem lsystem4;
+    lsystem4.axiom = "X";
+    lsystem4.iterations = 7;
 
-	// 4th L-System
+    lsystem4.rules['X'] = "F[+X]F[-X]+X";
+    lsystem4.rules['F'] = "FF";
 
-	rules.clear();
-    iterations = 7;
-
-    rules['X'] = "F[+X]F[-X]+X";
-    rules['F'] = "FF";
-
-    currentLSystem = Lsystem(axiom, rules, iterations);
-    app.trees.emplace_back(currentLSystem, 0.05f, 20.0f);
+    app.trees.emplace_back(lsystem4, 0.005f, 20.0f);
 
 	// 5th L-System
+    LSystem lsystem5;
+	lsystem5.axiom = "X";
+    lsystem5.iterations = 7;
 
-    rules.clear();
-    iterations = 7;
+    lsystem5.rules['X'] = "F[+X][-X]FX";
+    lsystem5.rules['F'] = "FF";
 
-    rules['X'] = "F[+X][-X]FX";
-    rules['F'] = "FF";
-
-    currentLSystem = Lsystem(axiom, rules, iterations);
-    app.trees.emplace_back(currentLSystem, 0.05f, 25.7f);
+    app.trees.emplace_back(lsystem5, 0.02f, 25.7f);
 
     // 6th L-System
+    LSystem lsystem6;
+	lsystem6.axiom = "X";
+    lsystem6.iterations = 5;
 
-    
+    lsystem6.rules['X'] = "F-[[X]+X]+F[+FX]-X";
+    lsystem6.rules['F'] = "FF";
 
-    rules.clear();
-    iterations = 5;
-
-    rules['X'] = "F-[[X]+X]+F[+FX]-X";
-    rules['F'] = "FF";
-
-    currentLSystem = Lsystem(axiom, rules, iterations);
-    app.trees.emplace_back(currentLSystem, 0.05f, 22.5f);
+    app.trees.emplace_back(lsystem6, 0.02f, 22.5f);
     
 
    
@@ -358,15 +347,7 @@ int main(void)
        glDeleteShader(fragmentShaderOrange);
        glDeleteShader(fragmentShaderYellow);
 
-	   // INITIALIZE IMGUI CONTEXT
-	   IMGUI_CHECKVERSION();
-	   ImGui::CreateContext();
-	   ImGuiIO& io = ImGui::GetIO(); (void)io;
-       ImGui::StyleColorsDark();
-	   ImGui_ImplGlfw_InitForOpenGL(window, true);
-       ImGui_ImplOpenGL3_Init("#version 330");
-
-       
+       app.gui.init(window);
 
 // RENDER LOOP
        /* Loop until the user closes the window */
@@ -382,18 +363,7 @@ int main(void)
            glClearColor(0.2f, 0.3f, 0.3f, 1.0f); // background color
            glClear(GL_COLOR_BUFFER_BIT);
 
-           // ImGui test
-		   ImGui_ImplOpenGL3_NewFrame();
-           ImGui_ImplGlfw_NewFrame();
-           ImGui::NewFrame();
-
-           // ImGui window
-           {
-               ImGui::Begin("My Window");                          // Create a window called "Hello, ImGui!" and append into it.
-               ImGui::Text("L System");               // Display some text (you can use a format strings too)
-               //ImGui::SliderFloat("FOV", &fov, 30, 90.0);
-               ImGui::End();
-		   }
+           app.gui.draw();
 
            /*Code To print First Square*/
            // 2. use our shader program when we want to render an object
@@ -413,7 +383,7 @@ int main(void)
 
            /*Code To print Lines*/
            glUseProgram(shaderProgramOrange);
-		   app.drawCurrentMesh();
+		   app.render();
 
            //This works
             /*glBegin(GL_POLYGON);
@@ -435,27 +405,19 @@ int main(void)
 
 
 
-           //ImGui Draw
-           ImGui::Render();
-           ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+           app.gui.UIrender();
 
            /* Swap front and back buffers */
            glfwSwapBuffers(window);
        }
-//IMGUI CLEANUP
-       ImGui_ImplOpenGL3_Shutdown();
-       ImGui_ImplGlfw_Shutdown();
-	   ImGui::DestroyContext();
+
    
    // optional: de-allocate all resources once they've outlived their purpose:
    // ------------------------------------------------------------------------
    glDeleteVertexArrays(2, VAOs);
    glDeleteBuffers(2, VBOs);
    glDeleteBuffers(2, EBOs);
-   for (int i = 0; i < app.trees.size(); i++) {
-       app.trees[i].release();
-
-   }
+   app.release();
    glDeleteProgram(shaderProgramOrange);
    glDeleteProgram(shaderProgramYellow);
 

@@ -10,8 +10,4 @@
 
 #include "App.h"
 
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
-
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);

@@ -139,6 +139,7 @@
     <ClCompile Include="external\imgui\imgui_tables.cpp" />
     <ClCompile Include="external\imgui\imgui_widgets.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="GUI.cpp" />
     <ClCompile Include="LSystem.cpp" />
     <ClCompile Include="LSystem.h" />
     <ClCompile Include="main.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="external\imgui\imstb_rectpack.h" />
     <ClInclude Include="external\imgui\imstb_textedit.h" />
     <ClInclude Include="external\imgui\imstb_truetype.h" />
+    <ClInclude Include="GUI.h" />
     <ClInclude Include="header\shaderClass.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
