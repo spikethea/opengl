@@ -1,18 +1,4 @@
-#include <iostream>
-#include <glad/glad.h> 
-#include <GLFW/glfw3.h>
-#define _USE_MATH_DEFINES
-#include <cmath>
-
-#include <stack>;
-#include <corecrt_math_defines.h>
-
 #include "main.h"
-#include "App.h"
-
-#include <imgui.h>
-#include <imgui_impl_glfw.h>
-#include <imgui_impl_opengl3.h>
 // Do not include imgui loader.h!
 
 using namespace std;
@@ -132,7 +118,8 @@ int main(void)
     rules['F'] = "F[+F]F[-F]F";
 
     string currentLSystem = Lsystem(axiom, rules, iterations);
-    app.trees.push_back(LSystemMesh(currentLSystem, 0.05f, 25.7f));
+
+    app.trees.emplace_back(currentLSystem, 0.05f, 25.7f);
     
     
 	//2nd L-System
@@ -143,16 +130,18 @@ int main(void)
     rules['F'] = "F[+F]F[-F][F]";
 
     currentLSystem = Lsystem(axiom, rules, iterations);
-    app.trees.push_back(LSystemMesh(currentLSystem, 0.05f, 20.0f));
+
+    app.trees.emplace_back(currentLSystem, 0.05f, 20.0f);
 
     //3rd L-System
     rules.clear();
 	iterations = 4;
 
-    rules['F'] = "FF[-F+F+F]+[+F-F-F]";
+    rules['F'] = "FF-[-F+F+F]+[+F-F-F]";
 
     currentLSystem = Lsystem(axiom, rules, iterations);
-    app.trees.push_back(LSystemMesh(currentLSystem, 0.05f, 22.5f));
+
+    app.trees.emplace_back(currentLSystem, 0.05f, 22.5f);
 
 
 // EDGE REWRITING L_SYSTEMS
@@ -167,7 +156,7 @@ int main(void)
     rules['F'] = "FF";
 
     currentLSystem = Lsystem(axiom, rules, iterations);
-    app.trees.push_back(LSystemMesh(currentLSystem, 0.05f, 20.0f));
+    app.trees.emplace_back(currentLSystem, 0.05f, 20.0f);
 
 	// 5th L-System
 
@@ -178,7 +167,7 @@ int main(void)
     rules['F'] = "FF";
 
     currentLSystem = Lsystem(axiom, rules, iterations);
-    app.trees.push_back(LSystemMesh(currentLSystem, 0.05f, 25.7f));
+    app.trees.emplace_back(currentLSystem, 0.05f, 25.7f);
 
     // 6th L-System
 
@@ -191,7 +180,7 @@ int main(void)
     rules['F'] = "FF";
 
     currentLSystem = Lsystem(axiom, rules, iterations);
-    app.trees.push_back(LSystemMesh(currentLSystem, 0.05f, 25.7f));
+    app.trees.emplace_back(currentLSystem, 0.05f, 22.5f);
     
 
    
@@ -263,12 +252,11 @@ int main(void)
 //   glBindVertexArray(0);
 
    // Line Drawing
-   app.trees[0].uploadMeshToGPU();
-   app.trees[1].uploadMeshToGPU();
-   app.trees[2].uploadMeshToGPU();
-   app.trees[3].uploadMeshToGPU();
-   app.trees[4].uploadMeshToGPU();
-   app.trees[5].uploadMeshToGPU();
+
+   for (int i = 0; i < app.trees.size(); i++) {
+	   app.trees[i].init();
+       app.trees[i].uploadMeshToGPU();
+   }
 
 
    
@@ -403,6 +391,7 @@ int main(void)
            {
                ImGui::Begin("My Window");                          // Create a window called "Hello, ImGui!" and append into it.
                ImGui::Text("L System");               // Display some text (you can use a format strings too)
+               //ImGui::SliderFloat("FOV", &fov, 30, 90.0);
                ImGui::End();
 		   }
 
@@ -460,9 +449,13 @@ int main(void)
    
    // optional: de-allocate all resources once they've outlived their purpose:
    // ------------------------------------------------------------------------
-   glDeleteVertexArrays(3, VAOs);
-   glDeleteBuffers(3, VBOs);
-   glDeleteBuffers(3, EBOs);
+   glDeleteVertexArrays(2, VAOs);
+   glDeleteBuffers(2, VBOs);
+   glDeleteBuffers(2, EBOs);
+   for (int i = 0; i < app.trees.size(); i++) {
+       app.trees[i].release();
+
+   }
    glDeleteProgram(shaderProgramOrange);
    glDeleteProgram(shaderProgramYellow);
 

@@ -21,17 +21,25 @@ public:
     vector<unsigned int> indices;
 
     // Constructor
-    Mesh() {
+    void init() {
         glGenVertexArrays(1, &VAO);
         glGenBuffers(1, &VBO);
         glGenBuffers(1, &EBO);
+
+        std::cout << "Mesh created: VAO=" << VAO
+            << ", VBO=" << VBO
+            << ", EBO=" << EBO << std::endl;
     }
 
     // Destructor
-    ~Mesh() {
+    void release() {
         glDeleteBuffers(1, &VBO);
         glDeleteBuffers(1, &EBO);
         glDeleteVertexArrays(1, &VAO);
+
+        std::cout << "Mesh Destroyed: VAO=" << VAO
+            << ", VBO=" << VBO
+            << ", EBO=" << EBO << std::endl;
     }
 
     float DegToRad(float degrees) {
@@ -63,9 +71,9 @@ public:
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
         glEnableVertexAttribArray(0);
 
-        GLint vaoID;
-        glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &vaoID);
-        std::cout << "Currently bound VAO: " << vaoID << std::endl;
+        //GLint vaoID;
+        //glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &vaoID);
+        //std::cout << "Currently bound VAO: " << vaoID << std::endl;
         std::cout << "Uploading Mesh to GP" << std::endl;
         glBindVertexArray(0);
 
@@ -86,12 +94,15 @@ public:
     }
 
     void DrawMesh() const {
+        GLint vaoID;
+        glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &vaoID);
+        //std::cout << "Currently bound VAO: " << vaoID << std::endl;
         glBindVertexArray(VAO);
         if (!indices.empty()) {
             glDrawElements(GL_LINES, indices.size(), GL_UNSIGNED_INT, 0);
         }
         else 
-            //cout << "No Indices to draw!" << endl;
+            cout << "No Indices to draw!" << endl;
         glBindVertexArray(0);
 
     }
@@ -188,14 +199,14 @@ public:
         float currentOrientation = 0.0f; // in radians
         int currentIndex = 0;
 
-        cout << LSystemData << endl;
+        //cout << LSystemData << endl;
         for (int i = 0; i < LSystemData.length(); ++i) {
             char command = LSystemData[i];
 
             switch (command) {
             case 'F':
                 // draw forward
-                cout << "Draw Forward" << endl;
+                //cout << "Draw Forward" << endl;
                 // code to draw a line forward
 
                 //VERTEX POSITION
@@ -209,18 +220,18 @@ public:
                 break;
             case '+':
                 // turn right
-                cout << "Turn Right" << endl;
+                //cout << "Turn Right" << endl;
                 currentOrientation -= DegToRad(angleDeg);
                 break;
             case '-':
                 // turn left
-                cout << "Turn Left" << endl;
+                //cout << "Turn Left" << endl;
                 currentOrientation += DegToRad(angleDeg);
                 break;
             case '[':
             {
                 // push position and angle to stack
-                cout << "Push to Stack" << endl;
+                //cout << "Push to Stack" << endl;
                 // VERTEX POSITION
                 Vec4 pushVector4 = {
                     currentPosition.x,
@@ -236,7 +247,7 @@ public:
             }
             case ']':
                 // pop position and angle from stack
-                cout << "Pop from Stack" << endl;
+                //cout << "Pop from Stack" << endl;
 
                 // VERTEX POSITION
                 Vec4 LastPosition = VectorHistory.top();
@@ -306,7 +317,7 @@ public:
             for (size_t j = 1; j < seq.size(); ++j) {
                 indices.push_back(seq[j - 1]);
                 indices.push_back(seq[j]);
-                cout << "pushing into indices" << endl;
+                // cout << "pushing into indices" << endl;
             }
         }
     }
