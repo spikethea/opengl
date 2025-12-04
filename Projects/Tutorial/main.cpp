@@ -363,7 +363,7 @@ int main(void)
            glClearColor(0.2f, 0.3f, 0.3f, 1.0f); // background color
            glClear(GL_COLOR_BUFFER_BIT);
 
-           app.gui.draw();
+           app.gui.draw(app.activeIndex, app.trees);
 
            /*Code To print First Square*/
            // 2. use our shader program when we want to render an object

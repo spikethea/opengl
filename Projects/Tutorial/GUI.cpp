@@ -1,5 +1,7 @@
 #include "GUI.h"
 
+#include "LSystemMesh.h"
+
 void GUI::init(GLFWwindow* window) {
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
@@ -9,7 +11,10 @@ void GUI::init(GLFWwindow* window) {
     ImGui_ImplOpenGL3_Init("#version 330");
 }
 
-void GUI::draw() {
+void GUI::draw(int& activeIndex, std::vector<LSystemMesh>& trees) {
+    // shorten deeply nested variable
+    auto& iterations = trees[activeIndex].lSystem.iterations;
+
     //IMGUI RENDER
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
@@ -20,14 +25,26 @@ void GUI::draw() {
         ImGui::Begin("My Window");                          // Create a window called "Hello, ImGui!" and append into it.
         ImGui::Text("L System");               // Display some text (you can use a format strings too)
         ImGui::LabelText("label", "Value");
-        ImGui::SliderFloat("size", &size, 0.01, 0.1);
+        if (ImGui::SliderFloat("size", &trees[activeIndex].unit, 0.01, 0.1)) {
+            trees[activeIndex].updateLSystem();
+        };
         
         ImGui::Text("How many Iterations?");
         float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
         ImGui::PushItemFlag(ImGuiItemFlags_ButtonRepeat, true);
-        if (ImGui::ArrowButton("##left", ImGuiDir_Left)) { iterations--; }
+        if (ImGui::ArrowButton("##left", ImGuiDir_Left)) {
+            if (iterations < 1)
+                return;
+            iterations--;
+			trees[activeIndex].updateLSystem();
+        }
         ImGui::SameLine(0.0f, spacing);
-        if (ImGui::ArrowButton("##right", ImGuiDir_Right)) { iterations++; }
+        if (ImGui::ArrowButton("##right", ImGuiDir_Right)) {
+            if (iterations > 6)
+                return;
+            iterations++;
+            trees[activeIndex].updateLSystem();
+        }
         ImGui::PopItemFlag();
         ImGui::SameLine();
         ImGui::Text("%d", iterations);
@@ -41,7 +58,9 @@ void GUI::draw() {
             ImGui::PushStyleColor(ImGuiCol_Button, (ImVec4)ImColor::HSV(i / 7.0f, 0.6f, 0.6f));
             ImGui::PushStyleColor(ImGuiCol_ButtonHovered, (ImVec4)ImColor::HSV(i / 7.0f, 0.7f, 0.7f));
             ImGui::PushStyleColor(ImGuiCol_ButtonActive, (ImVec4)ImColor::HSV(i / 7.0f, 0.8f, 0.8f));
-            ImGui::Button("Click");
+            if (ImGui::Button("Click")) {
+				activeIndex = i;
+            };
             ImGui::PopStyleColor(3);
             ImGui::PopID();
         }

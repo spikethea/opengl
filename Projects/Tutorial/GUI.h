@@ -1,18 +1,20 @@
 #pragma once
 
+#include <vector>
 #include <imgui.h>
 #include <imgui_impl_glfw.h>
 #include <imgui_impl_opengl3.h>
+
+#include "LSystemMesh.h"
 
 
 class GUI {
 public:
 	float size = 0.05f;
-	int iterations = 0;
 
 	void init(GLFWwindow* window);
 
-	void draw();
+	void draw(int& activeIndex, std::vector<LSystemMesh>& trees);
 
 	void UIrender();
 

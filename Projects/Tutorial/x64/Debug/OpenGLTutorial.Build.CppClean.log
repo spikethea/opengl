@@ -1,9 +1,7 @@
 c:\users\spike\documents\opengl\projects\tutorial\x64\debug\vc143.pdb
 c:\users\spike\documents\opengl\projects\tutorial\x64\debug\vc143.idb
 c:\users\spike\documents\opengl\projects\tutorial\x64\debug\lsystemmesh.obj
-c:\users\spike\documents\opengl\projects\tutorial\x64\debug\main.obj
 c:\users\spike\documents\opengl\projects\tutorial\x64\debug\lsystem.obj
-c:\users\spike\documents\opengl\projects\tutorial\x64\debug\gui.obj
 c:\users\spike\documents\opengl\projects\tutorial\x64\debug\imgui_widgets.obj
 c:\users\spike\documents\opengl\projects\tutorial\x64\debug\imgui_tables.obj
 c:\users\spike\documents\opengl\projects\tutorial\x64\debug\imgui_impl_opengl3.obj
@@ -11,16 +9,6 @@ c:\users\spike\documents\opengl\projects\tutorial\x64\debug\imgui_impl_glfw.obj
 c:\users\spike\documents\opengl\projects\tutorial\x64\debug\imgui_draw.obj
 c:\users\spike\documents\opengl\projects\tutorial\x64\debug\imgui_demo.obj
 c:\users\spike\documents\opengl\projects\tutorial\x64\debug\imgui.obj
-c:\users\spike\documents\opengl\projects\tutorial\x64\debug\app.obj
-c:\users\spike\documents\opengl\projects\tutorial\x64\debug\glad.obj
-c:\users\spike\documents\opengl\projects\x64\debug\opengltutorial.exe
-c:\users\spike\documents\opengl\projects\x64\debug\opengltutorial.pdb
-c:\users\spike\documents\opengl\projects\tutorial\x64\debug\opengltutorial.ilk
 c:\users\spike\documents\opengl\projects\tutorial\x64\debug\opengltutorial.tlog\cl.command.1.tlog
-c:\users\spike\documents\opengl\projects\tutorial\x64\debug\opengltutorial.tlog\cl.items.tlog
 c:\users\spike\documents\opengl\projects\tutorial\x64\debug\opengltutorial.tlog\cl.read.1.tlog
 c:\users\spike\documents\opengl\projects\tutorial\x64\debug\opengltutorial.tlog\cl.write.1.tlog
-c:\users\spike\documents\opengl\projects\tutorial\x64\debug\opengltutorial.tlog\link.command.1.tlog
-c:\users\spike\documents\opengl\projects\tutorial\x64\debug\opengltutorial.tlog\link.read.1.tlog
-c:\users\spike\documents\opengl\projects\tutorial\x64\debug\opengltutorial.tlog\link.secondary.1.tlog
-c:\users\spike\documents\opengl\projects\tutorial\x64\debug\opengltutorial.tlog\link.write.1.tlog
