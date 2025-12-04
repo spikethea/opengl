@@ -22,10 +22,15 @@ void GUI::draw(int& activeIndex, std::vector<LSystemMesh>& trees) {
 
     // ImGui window
     {
-        ImGui::Begin("My Window");                          // Create a window called "Hello, ImGui!" and append into it.
+        ImGui::Begin("Menu");                          // Create a window called "Hello, ImGui!" and append into it.
         ImGui::Text("L System");               // Display some text (you can use a format strings too)
-        ImGui::LabelText("label", "Value");
-        if (ImGui::SliderFloat("size", &trees[activeIndex].unit, 0.01, 0.1)) {
+        ImGui::Text("Scale");
+        if (ImGui::SliderFloat("size", &trees[activeIndex].unit, 0.01, 0.2)) {
+            trees[activeIndex].updateLSystem();
+        };
+
+        ImGui::Text("Set Angle (Degrees)");
+        if (ImGui::SliderFloat("angle", &trees[activeIndex].angleDeg, 0, 90)) {
             trees[activeIndex].updateLSystem();
         };
         
@@ -38,6 +43,7 @@ void GUI::draw(int& activeIndex, std::vector<LSystemMesh>& trees) {
             iterations--;
 			trees[activeIndex].updateLSystem();
         }
+
         ImGui::SameLine(0.0f, spacing);
         if (ImGui::ArrowButton("##right", ImGuiDir_Right)) {
             if (iterations > 6)
@@ -66,17 +72,23 @@ void GUI::draw(int& activeIndex, std::vector<LSystemMesh>& trees) {
         }
 
         ImGui::Text("Stochastic");
-            ImGui::Button("Random1");
-            ImGui::SetItemTooltip("Re-Click to generate random values");
-            ImGui::SameLine();
-            ImGui::Button("Random2");
-            ImGui::SetItemTooltip("Re-Click to generate random values");
+        if (ImGui::Button("Fuzzy Weed")) {
+            activeIndex = 6;
+            trees[activeIndex].updateLSystem();
+        };
+        ImGui::SetItemTooltip("Re-Click to generate random values");
+        ImGui::SameLine();
+        if (ImGui::Button("Binary Tree")) {
+            activeIndex = 7;
+            trees[activeIndex].updateLSystem();
+        };
+        ImGui::SetItemTooltip("Re-Click to generate random values");
+        ImGui::Separator();
+        ImGui::Text("Tip: You can also Hotkey through the L-Systems");
+        ImGui::Text("and adjust iterations with WASD/Arrow Keys");
+
         ImGui::End();
     }
-
-    ImGui::ShowDemoWindow();
-
-    //UIrender();
 }
 
 void GUI::UIrender() {

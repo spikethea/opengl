@@ -126,6 +126,7 @@ public:
 
     // LSystem parameters
     LSystem lSystem;
+    bool stochastic = false;
 
     // Graphics Options
     float unit = 0.01f;
@@ -135,6 +136,8 @@ public:
 		this->lSystem = Lsystem;
         this->unit = unitLength;
 		this->angleDeg = angleDeg;
+        cout << "Constructor called: LSystemMesh " << endl;
+        cout << Lsystem.evaluate() << endl;
 
         PlotLsystem(Lsystem.evaluate());
         ConvertVec3List();
@@ -160,7 +163,7 @@ public:
 
 
     void ConvertVec3List() {
-
+        cout << "vertices" << vertices.size() << endl;
         for (int i = 0; i < vertices.size(); ++i) {
             Vec3 Vector = vertices[i];
             lines.push_back(Vector.x);
@@ -215,8 +218,17 @@ public:
                 // code to draw a line forward
 
                 //VERTEX POSITION
-                currentPosition.x += unit * sin(currentOrientation); // move the start point up by 0.1 units
-                currentPosition.y += unit * cos(currentOrientation);
+                if (stochastic) {
+                    float r1 = (static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 1.5)));
+                    float r2 = (static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / 1.5)) );
+                    cout << r2 << endl;
+                    currentPosition.x += unit *  sin(r1 * currentOrientation); // move the start point up by 0.1 units
+                    currentPosition.y += unit * cos(r2 * currentOrientation);
+                }
+                else {
+                    currentPosition.x += unit * sin(currentOrientation); // move the start point up by 0.1 units
+                    currentPosition.y += unit * cos(currentOrientation);
+                }
                 vertices.push_back(currentPosition);
 
                 // INDEX POS
@@ -226,12 +238,12 @@ public:
             case '+':
                 // turn right
                 //cout << "Turn Right" << endl;
-                currentOrientation -= DegToRad(angleDeg);
+                currentOrientation += DegToRad(angleDeg);
                 break;
             case '-':
                 // turn left
                 //cout << "Turn Left" << endl;
-                currentOrientation += DegToRad(angleDeg);
+                currentOrientation -= DegToRad(angleDeg);
                 break;
             case '[':
             {
@@ -282,7 +294,6 @@ public:
             }
 
         }
-
 
         //convert vector to C array
         //int* verticesArray = &vertices[0];

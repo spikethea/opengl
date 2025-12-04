@@ -170,6 +170,33 @@ int main(void)
     lsystem6.rules['F'] = "FF";
 
     app.trees.emplace_back(lsystem6, 0.02f, 22.5f);
+
+//STOCHASTIC LSYSTEMS
+    LSystem lsystem7;
+    lsystem7.axiom = "X";
+    lsystem7.iterations = 5;
+
+    // Stochastic rules for 'F'
+    lsystem7.rules['F'] = "FF";
+    lsystem7.rules['X'] = "F-[[X]+X]+F[+FX]-X";
+    lsystem7.rules['X'] = "F+[[X]-X]-F[-FX]+X";
+
+    // You can implement randomness in rule selection during evaluation
+	app.trees.emplace_back(lsystem7, 0.02f, 22.5f);
+	app.trees[6].stochastic = true;
+
+    LSystem lsystem8;
+    lsystem8.axiom = "X";
+    lsystem8.iterations = 4;
+	
+
+    // Stochastic rules for 'F'
+    lsystem8.rules['F'] = "FF";
+    lsystem8.rules['X'] = "F[-X][-FFX]F[-X]+X";
+
+    // You can implement randomness in rule selection during evaluation
+    app.trees.emplace_back(lsystem8, 0.05f, 30.0f);
+    app.trees[7].stochastic = true;
     
 
    
@@ -245,6 +272,7 @@ int main(void)
    for (int i = 0; i < app.trees.size(); i++) {
 	   app.trees[i].init();
        app.trees[i].uploadMeshToGPU();
+	   cout << "Uploaded LSystem Mesh " << i << " to GPU." << endl;
    }
 
 
