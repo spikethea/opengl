@@ -117,7 +117,7 @@ int main(void)
 
     lsystem1.rules['F'] = "F[+F]F[-F]F";
 
-    app.trees.emplace_back(lsystem1, 0.02f, 25.7f);
+    app.trees.emplace_back(lsystem1, 0.006f, 25.7f);
     
     
 	//2nd L-System
@@ -159,7 +159,7 @@ int main(void)
     lsystem5.rules['X'] = "F[+X][-X]FX";
     lsystem5.rules['F'] = "FF";
 
-    app.trees.emplace_back(lsystem5, 0.02f, 25.7f);
+    app.trees.emplace_back(lsystem5, 0.006f, 25.7f);
 
     // 6th L-System
     LSystem lsystem6;
@@ -195,7 +195,7 @@ int main(void)
     lsystem8.rules['X'] = "F[-X][-FFX]F[-X]+X";
 
     // You can implement randomness in rule selection during evaluation
-    app.trees.emplace_back(lsystem8, 0.05f, 30.0f);
+    app.trees.emplace_back(lsystem8, 0.04f, 30.0f);
     app.trees[7].stochastic = true;
     
 
@@ -300,6 +300,13 @@ int main(void)
            "{\n"
            "   FragColor = vec4(1.0f, 1.0f, 0.0f, 1.0f);\n"
        "}\0";
+
+       const char* fragmentShader3Source = "#version 330 core\n"
+           "out vec4 FragColor;\n"
+           "void main()\n"
+           "{\n"
+           "   FragColor = vec4(1.0f, 0.0f, 1.0f, 1.0f);\n"
+           "}\0";
        
 
        // initiate vertex shader
@@ -323,8 +330,11 @@ int main(void)
        // initiate fragment shader and equivalent shader program
        unsigned int fragmentShaderOrange = glCreateShader(GL_FRAGMENT_SHADER); // the first fragment shader that outputs the color orange
        unsigned int fragmentShaderYellow = glCreateShader(GL_FRAGMENT_SHADER); // the second fragment shader that outputs the color yellow
+       unsigned int fragmentShaderBlack = glCreateShader(GL_FRAGMENT_SHADER); // the second fragment shader that outputs the color yellow
+
        unsigned int shaderProgramOrange = glCreateProgram();
        unsigned int shaderProgramYellow = glCreateProgram();
+       unsigned int shaderProgramBlack = glCreateProgram();
        
        // attach shader program to fragment shader & vertex shader
        glShaderSource(fragmentShaderOrange, 1, &fragmentShader1Source, NULL);
@@ -337,16 +347,26 @@ int main(void)
        glCompileShader(fragmentShaderYellow);
        glAttachShader(shaderProgramYellow, vertexShader);
        glAttachShader(shaderProgramYellow, fragmentShaderYellow);
+
+       // attach shader program to fragment shader & vertex shader
+       glShaderSource(fragmentShaderBlack, 1, &fragmentShader3Source, NULL);
+       glCompileShader(fragmentShaderBlack);
+       glAttachShader(shaderProgramBlack, vertexShader);
+       glAttachShader(shaderProgramBlack, fragmentShaderBlack);
        
        
        glLinkProgram(shaderProgramOrange);
        glLinkProgram(shaderProgramYellow);
+       glLinkProgram(shaderProgramBlack);
 
        // COMPILE LOG CHECKS FOR SHADER TEST WORKING
        // check vertex compilation was successful
        int  fragmentSuccess;
        char fragmentInfoLog[512];
        glGetShaderiv(fragmentShaderYellow, GL_COMPILE_STATUS, &fragmentSuccess);
+
+       
+       glGetShaderiv(fragmentShaderBlack, GL_COMPILE_STATUS, &fragmentSuccess);
 
        if(!fragmentSuccess)
        {
@@ -367,6 +387,17 @@ int main(void)
            std::cout << "SHADER::PROGRAM::SUCCESS\n" << infoLog << std::endl;
        }
 
+       // check for shader program  errors
+       glGetProgramiv(shaderProgramBlack, GL_LINK_STATUS, &success);
+       if (!success) {
+           glGetProgramInfoLog(shaderProgramBlack, 512, NULL, infoLog);
+           std::cout << "ERROR::SHADER::PROGRAM::COMPILATION_FAILED\n" << infoLog << std::endl;
+       }
+       else {
+           glGetProgramInfoLog(shaderProgramBlack, 512, NULL, infoLog);
+           std::cout << "SHADER::PROGRAM::SUCCESS\n" << infoLog << std::endl;
+       }
+
 
 
 
@@ -374,6 +405,7 @@ int main(void)
        glDeleteShader(vertexShader);
        glDeleteShader(fragmentShaderOrange);
        glDeleteShader(fragmentShaderYellow);
+       glDeleteShader(fragmentShaderBlack);
 
        app.gui.init(window);
 
@@ -410,7 +442,7 @@ int main(void)
            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
            /*Code To print Lines*/
-           glUseProgram(shaderProgramOrange);
+           glUseProgram(shaderProgramBlack);
 		   app.render();
 
            //This works

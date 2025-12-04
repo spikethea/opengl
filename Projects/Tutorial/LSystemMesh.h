@@ -188,8 +188,8 @@ public:
         // This vector stores all the indices for the current line being drawn
         vector<unsigned int> currentIndices;
 
-        Vec4 startPoint = { 0.0f, -0.5f, 0.0f, 0.0f };
-        vertices.push_back(Vec3({ 0.0f, -0.5f, 0.0f }));
+        Vec4 startPoint = { 0.0f, -0.8f, 0.0f, 0.0f };
+        vertices.push_back(Vec3({ 0.0f, -0.8f, 0.0f }));
 
 
 
@@ -237,13 +237,36 @@ public:
                 break;
             case '+':
                 // turn right
-                //cout << "Turn Right" << endl;
+                // Stochastic Decision Making
+                if (stochastic) {
+                    float r1 = (rand() % 101) /100;
+
+                    if (r1 == 1) {
+                        currentOrientation += DegToRad(angleDeg);
+                    }
+                    else {
+                        currentOrientation -= DegToRad(angleDeg);
+                    }
+                } else
+                // Standard Procedure
                 currentOrientation += DegToRad(angleDeg);
                 break;
             case '-':
                 // turn left
-                //cout << "Turn Left" << endl;
-                currentOrientation -= DegToRad(angleDeg);
+                // Stochastic Decision Making
+                if (stochastic) {
+                    float r1 = (rand() % 101) / 100;
+
+                    if (r1 == 1) {
+                        currentOrientation -= DegToRad(angleDeg);
+                    }
+                    else {
+                        currentOrientation += DegToRad(angleDeg);
+                    }
+                }
+                else
+                    // Standard Procedure
+                    currentOrientation -= DegToRad(angleDeg);
                 break;
             case '[':
             {

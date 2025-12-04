@@ -8,6 +8,12 @@ C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\LSystemMesh.h(46,31): warning 
 C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\LSystemMesh.h(102,50): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   (compiling source file 'GUI.cpp')
   
-C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\GUI.cpp(28,72): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\LSystemMesh.h(242,30): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'GUI.cpp')
+  
+C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\LSystemMesh.h(258,30): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'GUI.cpp')
+  
+C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\GUI.cpp(28,73): warning C4305: 'argument': truncation from 'double' to 'float'
 C:\Users\Spike\Documents\OpenGL\Projects\Tutorial\GUI.cpp(28,66): warning C4305: 'argument': truncation from 'double' to 'float'
   OpenGLTutorial.vcxproj -> C:\Users\Spike\Documents\OpenGL\Projects\x64\Debug\OpenGLTutorial.exe

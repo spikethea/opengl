@@ -25,7 +25,7 @@ void GUI::draw(int& activeIndex, std::vector<LSystemMesh>& trees) {
         ImGui::Begin("Menu");                          // Create a window called "Hello, ImGui!" and append into it.
         ImGui::Text("L System");               // Display some text (you can use a format strings too)
         ImGui::Text("Scale");
-        if (ImGui::SliderFloat("size", &trees[activeIndex].unit, 0.01, 0.2)) {
+        if (ImGui::SliderFloat("size", &trees[activeIndex].unit, 0.005, 0.2)) {
             trees[activeIndex].updateLSystem();
         };
 
@@ -38,18 +38,20 @@ void GUI::draw(int& activeIndex, std::vector<LSystemMesh>& trees) {
         float spacing = ImGui::GetStyle().ItemInnerSpacing.x;
         ImGui::PushItemFlag(ImGuiItemFlags_ButtonRepeat, true);
         if (ImGui::ArrowButton("##left", ImGuiDir_Left)) {
-            if (iterations < 1)
-                return;
-            iterations--;
-			trees[activeIndex].updateLSystem();
+            if (iterations > 0) {
+                iterations--;
+                trees[activeIndex].updateLSystem();
+            }
+
         }
 
         ImGui::SameLine(0.0f, spacing);
         if (ImGui::ArrowButton("##right", ImGuiDir_Right)) {
-            if (iterations > 6)
-                return;
-            iterations++;
-            trees[activeIndex].updateLSystem();
+            if (iterations < 7) {
+                iterations++;
+                trees[activeIndex].updateLSystem();
+            }
+            
         }
         ImGui::PopItemFlag();
         ImGui::SameLine();
